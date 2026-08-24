@@ -1,0 +1,667 @@
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f5f7;
+    color: #222;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.page {
+    width: 900px;
+    max-width: 95%;
+    min-height: 1000px;
+
+    margin: 30px auto;
+
+    background: #ffffff;
+
+    padding: 40px 50px;
+
+    border: 1px solid #d9e2e7;
+
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding-bottom: 18px;
+
+    border-bottom: 2px solid #176fa3;
+}
+
+
+.logo {
+    width: 75px;
+    height: 75px;
+
+    object-fit: contain;
+
+    margin-right: 18px;
+}
+
+
+.header-text {
+    flex: 1;
+
+    text-align: center;
+}
+
+
+.header-title {
+    color: #123f63;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    line-height: 1.3;
+}
+
+
+.header-subtitle {
+    margin-top: 6px;
+
+    color: #333;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   DOCUMENT TITLE
+===================================================== */
+
+.document-title {
+    text-align: center;
+
+    margin-top: 28px;
+
+    margin-bottom: 20px;
+}
+
+
+.document-title h1 {
+    margin: 0;
+
+    color: #176fa3;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+}
+
+
+.document-title p {
+    margin: 7px 0 0;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-area {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+
+.approved {
+    display: inline-block;
+
+    padding: 7px 20px;
+
+    background: #d4edda;
+
+    color: #155724;
+
+    border: 1px solid #b8dfc1;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.section-title {
+    margin-top: 22px;
+
+    padding: 10px 14px;
+
+    background: #176fa3;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    border-radius: 3px 3px 0 0;
+}
+
+
+/* =====================================================
+   INFORMATION TABLE
+===================================================== */
+
+.info-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-bottom: 18px;
+
+    table-layout: fixed;
+}
+
+
+.info-table td {
+    border: 1px solid #d4dde2;
+
+    padding: 11px 12px;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+    vertical-align: middle;
+}
+
+
+.info-table .label {
+    width: 22%;
+
+    background: #f3f7f9;
+
+    color: #164f76;
+
+    font-weight: bold;
+}
+
+
+.info-table .value {
+    width: 28%;
+
+    background: #ffffff;
+
+    color: #333;
+
+    word-break: break-word;
+}
+
+
+/* =====================================================
+   SIGNATURE AREA
+===================================================== */
+
+.signature-area {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-top: 80px;
+
+    padding: 0 10px;
+}
+
+
+.signature {
+    width: 210px;
+
+    text-align: center;
+}
+
+
+.signature-line {
+    width: 100%;
+
+    border-top: 1px solid #333;
+
+    margin-bottom: 8px;
+}
+
+
+.signature-text {
+    color: #444;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   PRINT / BACK BUTTON AREA
+===================================================== */
+
+.print-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 40px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e1e6e9;
+}
+
+
+/* =====================================================
+   COMMON BUTTON
+===================================================== */
+
+.btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 90px;
+
+    padding: 9px 20px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   PRINT BUTTON
+===================================================== */
+
+.btn-print {
+    background: #f59e0b;
+
+    color: #ffffff;
+}
+
+
+.btn-print:hover {
+    background: #d98c05;
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.btn-back {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 90px;
+
+    padding: 9px 20px;
+
+    background: #6c757d;
+
+    color: #ffffff;
+
+    border-radius: 4px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.btn-back:hover {
+    background: #565e64;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   HOVER EFFECT
+===================================================== */
+
+.btn-print,
+.btn-back {
+    transition:
+            background 0.2s ease,
+            transform 0.1s ease;
+}
+
+
+.btn-print:hover,
+.btn-back:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 950px) {
+
+    .page {
+        width: 95%;
+
+        padding: 30px 35px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .page {
+        width: 96%;
+
+        margin: 15px auto;
+
+        padding: 25px 20px;
+    }
+
+
+    .header {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    .logo {
+        margin-right: 0;
+
+        margin-bottom: 10px;
+    }
+
+
+    .header-title {
+        font-size: 19px;
+    }
+
+
+    .header-subtitle {
+        font-size: 13px;
+    }
+
+
+    .document-title h1 {
+        font-size: 21px;
+    }
+
+
+    .info-table {
+        table-layout: auto;
+    }
+
+
+    .info-table td {
+        padding: 9px 8px;
+
+        font-size: 12px;
+    }
+
+
+    .info-table .label {
+        width: 25%;
+    }
+
+
+    .info-table .value {
+        width: 25%;
+    }
+
+
+    .signature-area {
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 45px;
+
+        margin-top: 55px;
+    }
+
+
+    .signature {
+        width: 220px;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .page {
+        width: 100%;
+
+        max-width: 100%;
+
+        margin: 0;
+
+        padding: 20px 12px;
+
+        border: none;
+
+        box-shadow: none;
+    }
+
+
+    .header-title {
+        font-size: 17px;
+    }
+
+
+    .header-subtitle {
+        font-size: 12px;
+    }
+
+
+    .document-title {
+        margin-top: 22px;
+    }
+
+
+    .document-title h1 {
+        font-size: 18px;
+    }
+
+
+    .section-title {
+        font-size: 13px;
+
+        padding: 9px 10px;
+    }
+
+
+    .info-table td {
+        padding: 8px 6px;
+
+        font-size: 11px;
+    }
+
+
+    .approved {
+        font-size: 11px;
+
+        padding: 6px 15px;
+    }
+
+
+    .print-buttons {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .btn,
+    .btn-back {
+        width: 130px;
+    }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+    html,
+    body {
+        width: 100%;
+
+        margin: 0;
+
+        padding: 0;
+
+        background: #ffffff;
+    }
+
+
+    .page {
+        width: 100%;
+
+        max-width: 100%;
+
+        min-height: auto;
+
+        margin: 0;
+
+        padding: 0;
+
+        border: none;
+
+        box-shadow: none;
+    }
+
+
+    .print-buttons {
+        display: none !important;
+    }
+
+
+    @page {
+        size: A4;
+
+        margin: 15mm;
+    }
+
+
+    .header {
+        page-break-inside: avoid;
+    }
+
+
+    .document-title {
+        page-break-inside: avoid;
+    }
+
+
+    .status-area {
+        page-break-inside: avoid;
+    }
+
+
+    .section-title {
+        page-break-after: avoid;
+    }
+
+
+    .info-table {
+        page-break-inside: avoid;
+    }
+
+
+    .signature-area {
+        page-break-inside: avoid;
+
+        margin-top: 70px;
+    }
+
+
+    .approved {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+
+    .section-title {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+
+    .info-table .label {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+}

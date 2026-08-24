@@ -1,0 +1,1291 @@
+/* =========================================================
+   RESET / GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f8fa;
+    color: #333;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+    width: 100%;
+    min-height: 88px;
+    padding: 8px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #fff;
+    border-bottom: 1px solid #d7e4eb;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.brand-logo {
+    width: 64px;
+    height: 64px;
+    margin-right: 12px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    color: #123f63;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.brand-subtitle {
+    margin-top: 4px;
+    color: #333;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.header-right {
+    color: #17618f;
+    font-size: 12px;
+    line-height: 1.8;
+    text-align: right;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.nav-bar {
+    width: 100%;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 30px;
+
+    background: linear-gradient(
+            to bottom,
+            #4aa8d5,
+            #1479ad
+    );
+
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .20);
+}
+
+.home-link {
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    padding-right: 25px;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.home-link:hover {
+    color: #fff;
+}
+
+.home-icon {
+    margin-right: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.nav-right {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-circle {
+    width: 29px;
+    height: 29px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #fff;
+    background: rgba(255,255,255,.15);
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.nav-circle:hover {
+    background: rgba(255,255,255,.28);
+}
+
+.logout {
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 12px;
+
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    border-radius: 4px;
+
+    transition: .2s ease;
+}
+
+.logout:hover {
+    background: rgba(255,255,255,.15);
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+========================================================= */
+
+.main-wrapper {
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    min-height: calc(100vh - 200px);
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: 260px;
+    flex: 0 0 260px;
+
+    margin: 20px 0 20px 30px;
+
+    background: #fff;
+
+    border: 1px solid #d9e2e7;
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+.sidebar-title {
+    padding: 14px 17px;
+
+    background: #176fa3;
+
+    color: #fff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+.sidebar-item {
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 11px 16px;
+
+    color: #14577f;
+    background: #f5f7f8;
+
+    border-bottom: 1px solid #e1e6e9;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: .2s ease;
+}
+
+.sidebar-item i {
+    width: 18px;
+    text-align: center;
+}
+
+.sidebar-item:hover {
+    color: #0b527d;
+    background: #eaf5fa;
+}
+
+.sidebar-item.active {
+    color: #176fa3;
+    background: #fff;
+
+    border-left: 4px solid #176fa3;
+
+    padding-left: 12px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    flex: 1;
+    min-width: 0;
+
+    padding: 18px 30px 45px 30px;
+}
+
+.page-title {
+    margin: 0;
+
+    color: #123f63;
+
+    font-size: 27px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+.page-description {
+    margin-top: 7px;
+
+    color: #687780;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CONTENT CARD
+========================================================= */
+
+.content-card {
+    width: 100%;
+
+    margin-top: 20px;
+    padding: 15px;
+
+    background: #fff;
+
+    border: 1px solid #d9e3e8;
+    border-radius: 6px;
+
+    box-shadow: 0 2px 7px rgba(0,0,0,.06);
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-header {
+    width: 100%;
+    min-height: 38px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 14px;
+}
+
+.card-header-left {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+}
+
+.card-header-icon {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 10px;
+
+    border-radius: 5px;
+
+    background: #eaf6fb;
+    color: #1680b8;
+
+    font-size: 17px;
+}
+
+.card-header-title {
+    color: #164f76;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.header-actions {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.table-search {
+    position: relative;
+
+    width: 250px;
+    height: 36px;
+}
+
+.search-input {
+    width: 100%;
+    height: 36px;
+
+    padding: 7px 35px 7px 34px;
+
+    border: 1px solid #cbd9e0;
+    border-radius: 5px;
+
+    outline: none;
+
+    color: #333;
+    background: #fff;
+
+    font-size: 12px;
+
+    transition: .2s ease;
+}
+
+.search-input::placeholder {
+    color: #9aa7ad;
+}
+
+.search-input:hover {
+    border-color: #aebfc8;
+}
+
+.search-input:focus {
+    border-color: #2386c5;
+
+    box-shadow:
+            0 0 0 2px rgba(35,134,197,.10);
+}
+
+.search-icon {
+    position: absolute;
+
+    left: 11px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #738691;
+
+    font-size: 13px;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.clear-search {
+    position: absolute;
+
+    right: 5px;
+    top: 5px;
+
+    width: 26px;
+    height: 26px;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 4px;
+
+    background: transparent;
+    color: #87979f;
+
+    cursor: pointer;
+}
+
+.clear-search.show {
+    display: flex;
+}
+
+.clear-search:hover {
+    color: #176fa3;
+    background: #eef5f8;
+}
+
+
+/* =========================================================
+   RECORD SUMMARY
+========================================================= */
+
+.record-summary {
+    width: 100%;
+    min-height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+    padding: 8px 12px;
+
+    background: #f5f9fb;
+
+    border: 1px solid #dce7ec;
+    border-radius: 5px;
+}
+
+.summary-left {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #164f76;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.summary-left i {
+    color: #1680b8;
+}
+
+.summary-count {
+    min-width: 29px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 8px;
+
+    border-radius: 13px;
+
+    background: #176fa3;
+    color: #fff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid #d5e0e5;
+    border-radius: 5px;
+
+    background: #fff;
+}
+
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: #eef2f4;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #b5c5cc;
+    border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #8ea6b1;
+}
+
+
+/* =========================================================
+   TRAINING TABLE
+========================================================= */
+
+.training-table {
+    width: 100%;
+    min-width: 1280px;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    background: #fff;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.training-table th {
+    height: 42px;
+
+    padding: 10px 9px;
+
+    background: #176fa3;
+    color: #fff;
+
+    border-right: 1px solid rgba(255,255,255,.18);
+    border-bottom: 1px solid #176fa3;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: left;
+    white-space: nowrap;
+
+    vertical-align: middle;
+}
+
+.training-table th:last-child {
+    border-right: none;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.training-table td {
+    padding: 10px 9px;
+
+    color: #414b50;
+
+    border-bottom: 1px solid #e0e6e9;
+
+    line-height: 1.4;
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+}
+
+.training-table tbody tr:nth-child(even) {
+    background: #f8fafb;
+}
+
+.training-table tbody tr:hover {
+    background: #edf7fb;
+}
+
+.training-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   COLUMN
+========================================================= */
+
+.col-sl {
+    width: 45px;
+    text-align: center !important;
+}
+
+.col-print {
+    width: 95px;
+    text-align: center !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   EMPLOYEE
+========================================================= */
+
+.employee-id {
+    color: #075485;
+    font-weight: 700;
+}
+
+.employee-name {
+    color: #333;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   COURSE
+========================================================= */
+
+.course-cell {
+    min-width: 220px;
+    max-width: 300px;
+
+    white-space: normal !important;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   TRAINING TYPE
+========================================================= */
+
+.training-type {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 12px;
+
+    background: #e9eef1;
+    color: #52636c;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.training-type.initial {
+    background: #dceefa;
+    color: #17618f;
+}
+
+.training-type.recurrent {
+    background: #e8e0f8;
+    color: #6243a0;
+}
+
+.training-type.specialized {
+    background: #dff2e7;
+    color: #28734b;
+}
+
+.training-type.previous {
+    background: #fff0d6;
+    color: #996317;
+}
+
+
+/* =========================================================
+   CERTIFICATE DATE
+========================================================= */
+
+.certificate-date {
+    color: #444;
+    white-space: nowrap;
+}
+
+.muted {
+    color: #999;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.status-approved {
+    background: #d7f0df;
+    color: #1c6b39;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.btn {
+    min-height: 31px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 6px 10px;
+
+    border: 0;
+    border-radius: 4px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+            background .15s ease,
+            transform .1s ease;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   CERTIFICATE BUTTON
+========================================================= */
+
+.btn-certificate {
+    background: #319362;
+    color: #fff;
+}
+
+.btn-certificate:hover {
+    background: #287b52;
+    color: #fff;
+}
+
+
+/* =========================================================
+   PRINT BUTTON
+========================================================= */
+
+.btn-print {
+    background: #ef9b0b;
+    color: #fff;
+}
+
+.btn-print:hover {
+    background: #d88805;
+    color: #fff;
+}
+
+
+/* =========================================================
+   NO CERTIFICATE
+========================================================= */
+
+.no-certificate {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #999;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   NO SEARCH RESULT
+========================================================= */
+
+.no-search-result {
+    display: none;
+}
+
+.no-search-result td {
+    padding: 28px 20px !important;
+
+    text-align: center !important;
+
+    background: #fff !important;
+
+    color: #7c8b93 !important;
+
+    font-size: 13px;
+
+    white-space: normal !important;
+}
+
+.no-search-result i {
+    margin-right: 6px;
+    color: #1680b8;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty {
+    padding: 55px 20px !important;
+
+    text-align: center !important;
+
+    color: #888 !important;
+
+    white-space: normal !important;
+}
+
+.empty-icon {
+    margin-bottom: 12px;
+
+    color: #b6c5cb;
+
+    font-size: 40px;
+}
+
+.empty-title {
+    margin-bottom: 6px;
+
+    color: #627680;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.empty-text {
+    color: #919ca1;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    min-height: 72px;
+
+    padding: 14px 20px;
+
+    background: #2784b2;
+
+    border-top: 4px solid #69b6d9;
+
+    color: #fff;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .top-header {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .header-right {
+        display: none;
+    }
+
+    .sidebar {
+        width: 225px;
+        flex-basis: 225px;
+
+        margin-left: 20px;
+    }
+
+    .content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .training-table {
+        min-width: 1250px;
+    }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .card-header {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .card-header-left {
+        width: 100%;
+        flex: none;
+    }
+
+    .header-actions {
+        width: 100%;
+        margin-left: 0;
+
+        justify-content: flex-end;
+    }
+
+    .table-search {
+        width: 260px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .top-header {
+        min-height: 75px;
+        padding: 9px 14px;
+    }
+
+    .brand-logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 8px;
+    }
+
+    .brand-title {
+        font-size: 17px;
+        white-space: normal;
+    }
+
+    .brand-subtitle {
+        font-size: 12px;
+    }
+
+    .nav-bar {
+        padding: 0 15px;
+    }
+
+    .nav-circle {
+        display: none;
+    }
+
+    .logout {
+        padding: 0 8px;
+        font-size: 12px;
+    }
+
+    .main-wrapper {
+        display: block;
+    }
+
+    .sidebar {
+        width: auto;
+        margin: 15px;
+
+        min-height: auto;
+    }
+
+    .content {
+        width: 100%;
+
+        padding: 10px 15px 30px;
+    }
+
+    .page-title {
+        font-size: 23px;
+    }
+
+    .page-description {
+        font-size: 12px;
+    }
+
+    .content-card {
+        margin-top: 17px;
+        padding: 10px;
+    }
+
+    .card-header {
+        display: block;
+    }
+
+    .card-header-left {
+        width: 100%;
+    }
+
+    .card-header-title {
+        font-size: 15px;
+        white-space: normal;
+    }
+
+    .header-actions {
+        width: 100%;
+
+        margin-top: 10px;
+
+        justify-content: stretch;
+    }
+
+    .table-search {
+        width: 100%;
+        flex: 1;
+    }
+
+    .record-summary {
+        margin-bottom: 10px;
+    }
+
+    .training-table {
+        min-width: 1250px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .brand-title {
+        font-size: 15px;
+    }
+
+    .brand-subtitle {
+        font-size: 11px;
+    }
+
+    .home-link {
+        font-size: 12px;
+    }
+
+    .logout {
+        font-size: 11px;
+    }
+
+    .card-header-icon {
+        width: 31px;
+        height: 31px;
+        font-size: 15px;
+    }
+
+    .card-header-title {
+        font-size: 14px;
+    }
+
+    .summary-left {
+        font-size: 11px;
+    }
+
+    .summary-count {
+        min-width: 27px;
+        height: 24px;
+    }
+
+    .footer {
+        font-size: 10px;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    @page {
+        size: landscape;
+        margin: 10mm;
+    }
+
+    body {
+        background: #fff;
+    }
+
+    .top-header,
+    .nav-bar,
+    .sidebar,
+    .footer,
+    .header-actions,
+    .record-summary,
+    .no-print,
+    .no-search-result {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        display: block;
+        min-height: auto;
+    }
+
+    .content {
+        width: 100%;
+        padding: 0;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .page-description {
+        font-size: 11px;
+    }
+
+    .content-card {
+        margin-top: 10px;
+        padding: 0;
+
+        border: none;
+        box-shadow: none;
+    }
+
+    .table-wrapper {
+        overflow: visible;
+        border: none;
+    }
+
+    .training-table {
+        width: 100%;
+        min-width: 0;
+
+        font-size: 8px;
+    }
+
+    .training-table th,
+    .training-table td {
+        padding: 4px;
+    }
+
+    .training-table th {
+        background: #176fa3 !important;
+        color: #fff !important;
+
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .btn-certificate {
+        padding: 0;
+
+        background: none !important;
+        color: #000 !important;
+    }
+
+    .status-approved {
+        background: none !important;
+        color: #000 !important;
+    }
+}

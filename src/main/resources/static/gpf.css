@@ -1,0 +1,361 @@
+:root {
+    --good: #198754;
+    --bad: #dc3545;
+    --muted: #6c757d;
+    --deep-green: #146c43;
+}
+
+
+/* =========================================================
+   Common
+   ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   Different Contribution / Manual Recovery
+   ========================================================= */
+
+#diffContribFields .field,
+#recoveryManualView .field {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 10px;
+}
+
+
+#diffContribFields .field label,
+#recoveryManualView .field label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   Contribution Rate Display
+   ========================================================= */
+
+.rate-display {
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   Slab Breakdown
+   ========================================================= */
+
+.slab-slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #e2e6ea;
+    border-radius: 8px;
+
+    margin-bottom: 8px;
+
+    background: #fff;
+}
+
+
+.slab-slot .slot-label {
+    font-weight: 600;
+}
+
+
+.slab-slot .slot-amount {
+    color: var(--muted);
+}
+
+
+.slab-slot .slot-interest {
+    font-weight: 700;
+    color: var(--good);
+}
+
+
+.slab-slot.slot-total {
+    background: #f2efe4;
+    border-color: #d9d2b8;
+}
+
+
+/* =========================================================
+   Summary Card
+   ========================================================= */
+
+.summary-card {
+    border: 1px solid #e2e6ea;
+    border-radius: 10px;
+
+    padding: 14px 16px;
+
+    background: #fff;
+
+    height: 100%;
+}
+
+
+.summary-card .label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+
+.summary-card .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+
+.summary-card.highlight {
+    background: #eef2ee;
+    border-color: var(--deep-green);
+}
+
+
+.summary-card.highlight .value {
+    color: var(--deep-green);
+}
+
+
+/* =========================================================
+   Table
+   ========================================================= */
+
+tr.negative td.cl-value {
+    color: var(--bad);
+}
+
+
+tr.total td {
+    font-weight: 700;
+    background: #eef2ee;
+    color: var(--deep-green);
+}
+
+
+/* =========================================================
+   Print Only
+   ========================================================= */
+
+.print-only {
+    display: none;
+}
+
+
+/* =========================================================
+   Print Report Header
+   ========================================================= */
+
+.report-header {
+    text-align: center;
+
+    border-bottom: 2px solid #000;
+
+    padding-bottom: 10px;
+
+    margin-bottom: 18px;
+}
+
+
+.report-header h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.4rem;
+}
+
+
+.report-header .office-name {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+
+.report-meta {
+    display: flex;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    font-size: 0.9rem;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   Print Report Footer
+   ========================================================= */
+
+.report-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 60px;
+
+    font-size: 0.9rem;
+}
+
+
+.report-footer .sig-box {
+    text-align: center;
+
+    width: 220px;
+
+    border-top: 1px solid #000;
+
+    padding-top: 6px;
+}
+
+
+/* =========================================================
+   Print Media
+   ========================================================= */
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 14mm 12mm;
+    }
+
+
+    body {
+        background: #fff !important;
+    }
+
+
+    /* Hide everything except printable report */
+
+    .container > .card > .card-body > * {
+        display: none !important;
+    }
+
+
+    #panel-output,
+    .print-only {
+        display: block !important;
+    }
+
+
+    #panel-output.hidden {
+        display: block !important;
+    }
+
+
+    /* Container */
+
+    .container {
+        max-width: 100% !important;
+
+        margin: 0 !important;
+    }
+
+
+    /* Cards */
+
+    .card {
+        border: none !important;
+
+        box-shadow: none !important;
+
+        margin: 0 0 14px 0 !important;
+    }
+
+
+    .card-header {
+        background: #fff !important;
+
+        color: #000 !important;
+
+        border-bottom: 1px solid #000 !important;
+
+        padding: 6px 0 !important;
+    }
+
+
+    .card-header h3,
+    .card-header h4,
+    .card-header h5 {
+        color: #000 !important;
+
+        font-size: 1.05rem !important;
+    }
+
+
+    .card-body {
+        padding: 6px 0 !important;
+    }
+
+
+    /* Tables */
+
+    table {
+        font-size: 0.82rem;
+    }
+
+
+    thead.table-dark {
+        background: #fff !important;
+    }
+
+
+    thead.table-dark th {
+        background: #e9e9e9 !important;
+
+        color: #000 !important;
+
+        border: 1px solid #000 !important;
+    }
+
+
+    td,
+    th {
+        border: 1px solid #555 !important;
+    }
+
+
+    /* Summary */
+
+    .summary-card {
+        border: 1px solid #000 !important;
+
+        break-inside: avoid;
+    }
+
+
+    .summary-card.highlight {
+        background: #f0f0f0 !important;
+    }
+
+
+    /* Prevent page breaking */
+
+    #panel-output .card {
+        break-inside: avoid;
+
+        page-break-inside: avoid;
+    }
+
+
+    /* Hide buttons */
+
+    .btn,
+    #addLoanBtn,
+    .row-remove,
+    a.btn {
+        display: none !important;
+    }
+}

@@ -1,0 +1,854 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f8fa;
+    color: #333;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+    height: 105px;
+    position: relative;
+
+    background:
+            linear-gradient(
+                    to bottom,
+                    #ffffff,
+                    #ffffff 80%,
+                    #edf7fc
+            );
+
+    border-top: 3px solid #1688c5;
+}
+
+.caab-logo {
+    position: absolute;
+    top: 10px;
+    left: 40px;
+
+    width: 70px;
+    height: 70px;
+
+    object-fit: contain;
+}
+
+.header-title {
+    position: absolute;
+    left: 118px;
+    top: 25px;
+}
+
+.header-title h1 {
+    margin: 0;
+    color: #1c577f;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.header-title h2 {
+    margin: 5px 0 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.header-info {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+
+    text-align: right;
+
+    color: #28618b;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    height: 43px;
+    padding: 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+            linear-gradient(
+                    to bottom,
+                    #65b0df,
+                    #1975ad
+            );
+}
+
+.home {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.home i {
+    font-size: 23px;
+    margin-right: 10px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.circle-btn {
+    width: 37px;
+    height: 37px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,.5);
+
+    background: rgba(255,255,255,.15);
+}
+
+.logout {
+    width: 210px;
+    height: 30px;
+
+    border: 0;
+    border-radius: 20px;
+
+    color: white;
+    font-weight: bold;
+
+    background:
+            linear-gradient(
+                    to bottom,
+                    #65b1df,
+                    #438fbe
+            );
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+    padding: 25px 40px 40px;
+    min-height: 650px;
+}
+
+
+/* =====================================================
+   BREADCRUMB
+===================================================== */
+
+.breadcrumb {
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: #1975ad;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    margin: 0 8px;
+    color: #888;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.page-title {
+    margin: 0;
+
+    color: #123f62;
+    font-size: 30px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-title i {
+    color: #e9b52f;
+    font-size: 32px;
+}
+
+.page-description {
+    margin-top: 7px;
+
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #ccd9e1;
+    border-radius: 5px;
+
+    background: white;
+    color: #17618f;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.back-btn:hover {
+    background: #f1f8fc;
+    border-color: #2386c5;
+}
+
+
+/* =====================================================
+   ALERT
+===================================================== */
+
+.alert {
+    padding: 12px 15px;
+
+    border-radius: 5px;
+    margin-bottom: 18px;
+
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.alert-success {
+    background: #eaf7ee;
+    border: 1px solid #b8e0c3;
+    color: #23733b;
+}
+
+.alert-error {
+    background: #fff0f0;
+    border: 1px solid #efc0c0;
+    color: #a83232;
+}
+
+
+/* =====================================================
+   REPORT CARD
+===================================================== */
+
+.report-card {
+    background: white;
+
+    border: 1px solid #dce5eb;
+    border-radius: 6px;
+
+    box-shadow:
+            0 2px 6px rgba(0,0,0,.05);
+
+    overflow: hidden;
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-header {
+    min-height: 60px;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e1e7eb;
+
+    background: #ffffff;
+}
+
+.card-title {
+    color: #17618f;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.card-title i {
+    margin-right: 8px;
+    color: #2386c5;
+}
+
+.required {
+    color: #d32f2f;
+}
+
+
+/* =====================================================
+   FORM CONTENT
+===================================================== */
+
+.form-content {
+    padding: 25px;
+}
+
+
+/* =====================================================
+   FORM SECTION
+===================================================== */
+
+.form-section {
+    margin-bottom: 28px;
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0 0 17px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #e4ebef;
+
+    color: #17618f;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.section-title i {
+    color: #2386c5;
+}
+
+
+/* =====================================================
+   FORM GRID
+===================================================== */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+    gap: 17px 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 7px;
+
+    color: #405866;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.form-control {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #ccd6de;
+    border-radius: 5px;
+
+    background: white;
+
+    color: #333;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+
+    outline: none;
+
+    transition: .2s ease;
+}
+
+.form-control:focus {
+    border-color: #2386c5;
+
+    box-shadow:
+            0 0 0 2px rgba(35,134,197,.08);
+}
+
+textarea.form-control {
+    height: auto;
+
+    min-height: 110px;
+
+    resize: vertical;
+
+    line-height: 20px;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   INCIDENT TYPE ICON
+===================================================== */
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #2386c5;
+
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+.input-with-icon .form-control {
+    padding-left: 36px;
+}
+
+
+/* =====================================================
+   RISK LEVEL
+===================================================== */
+
+.risk-options {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.risk-option {
+    position: relative;
+}
+
+.risk-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.risk-option label {
+    min-width: 95px;
+
+    height: 38px;
+
+    padding: 0 15px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ccd6de;
+    border-radius: 5px;
+
+    background: white;
+
+    color: #555;
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: .2s ease;
+}
+
+.risk-option label i {
+    margin-right: 6px;
+}
+
+.risk-option input:checked + label {
+    color: white;
+}
+
+.risk-low input:checked + label {
+    background: #399b55;
+    border-color: #399b55;
+}
+
+.risk-medium input:checked + label {
+    background: #d79b19;
+    border-color: #d79b19;
+}
+
+.risk-high input:checked + label {
+    background: #d13b30;
+    border-color: #d13b30;
+}
+
+.risk-critical input:checked + label {
+    background: #8f2020;
+    border-color: #8f2020;
+}
+
+
+/* =====================================================
+   CHECKBOX
+===================================================== */
+
+.declaration {
+    margin-top: 22px;
+
+    padding: 14px 16px;
+
+    background: #f7fafc;
+
+    border: 1px solid #dce6ec;
+
+    border-radius: 5px;
+
+    color: #555;
+
+    font-size: 13px;
+
+    line-height: 20px;
+}
+
+.declaration label {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.declaration input {
+    width: 16px;
+    height: 16px;
+
+    margin: 2px 0 0;
+
+    flex-shrink: 0;
+
+    accent-color: #2386c5;
+}
+
+
+/* =====================================================
+   BUTTON AREA
+===================================================== */
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e4ebef;
+}
+
+.btn {
+    height: 40px;
+
+    padding: 0 19px;
+
+    border-radius: 5px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    transition: .2s ease;
+}
+
+.btn-reset {
+    background: white;
+
+    border: 1px solid #ccd6de;
+
+    color: #555;
+}
+
+.btn-reset:hover {
+    background: #f4f7f9;
+
+    border-color: #aebdc7;
+}
+
+.btn-submit {
+    background:
+            linear-gradient(
+                    to bottom,
+                    #65b0df,
+                    #1975ad
+            );
+
+    border: 1px solid #1975ad;
+
+    color: white;
+
+    box-shadow:
+            0 2px 4px rgba(0,0,0,.12);
+}
+
+.btn-submit:hover {
+    background:
+            linear-gradient(
+                    to bottom,
+                    #4b9dce,
+                    #126694
+            );
+}
+
+
+/* =====================================================
+   INFORMATION BOX
+===================================================== */
+
+.info-box {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    padding: 14px 16px;
+
+    background: #eef8fd;
+
+    border: 1px solid #c9e5f3;
+
+    border-radius: 5px;
+
+    color: #28618b;
+
+    font-size: 13px;
+
+    line-height: 20px;
+}
+
+.info-box i {
+    margin-top: 2px;
+
+    color: #2386c5;
+
+    font-size: 17px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    min-height: 70px;
+
+    padding: 12px;
+
+    text-align: center;
+
+    background: #277cad;
+
+    border-top: 7px solid #5bb0e0;
+
+    color: white;
+
+    font-family: monospace;
+
+    font-size: 12px;
+
+    line-height: 21px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 800px) {
+
+    .header-info {
+        display: none;
+    }
+
+    .logout {
+        width: 120px;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .home {
+        font-size: 13px;
+    }
+
+    .circle-btn {
+        display: none;
+    }
+
+    .main {
+        padding: 20px 15px;
+    }
+
+    .header-title {
+        left: 95px;
+    }
+
+    .header-title h1 {
+        font-size: 18px;
+    }
+
+    .header-title h2 {
+        font-size: 14px;
+    }
+
+    .caab-logo {
+        left: 20px;
+
+        width: 60px;
+        height: 60px;
+    }
+
+    .form-content {
+        padding: 18px;
+    }
+
+    .risk-options {
+        display: grid;
+
+        grid-template-columns:
+                    repeat(2, 1fr);
+    }
+
+    .risk-option label {
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+}
+
