@@ -1,8 +1,15 @@
 package com.gpf.gpfcalculator.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "supervisor_assessments")
 public class SupervisorAssessment {
@@ -14,10 +21,8 @@ public class SupervisorAssessment {
     @Column(nullable = false)
     private Long trainingRecordId;
 
-    @Column(nullable = false)
     private String employeeId;
 
-    @Column(nullable = false)
     private String employeeName;
 
     private String supervisorName;
@@ -30,107 +35,19 @@ public class SupervisorAssessment {
 
     private LocalDateTime assessedAt;
 
-
-    // =====================================================
-    // ID
-    // =====================================================
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    // =====================================================
-    // TRAINING RECORD ID
-    // =====================================================
-
-    public Long getTrainingRecordId() {
-        return trainingRecordId;
-    }
-
-    public void setTrainingRecordId(Long trainingRecordId) {
+    // Custom Constructor
+    public SupervisorAssessment(Long trainingRecordId, String employeeId, String supervisorName, String assessmentStatus, String remarks) {
         this.trainingRecordId = trainingRecordId;
-    }
-
-
-    // =====================================================
-    // EMPLOYEE ID
-    // =====================================================
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
-    }
-
-
-    // =====================================================
-    // EMPLOYEE NAME
-    // =====================================================
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-
-    // =====================================================
-    // SUPERVISOR NAME
-    // =====================================================
-
-    public String getSupervisorName() {
-        return supervisorName;
-    }
-
-    public void setSupervisorName(String supervisorName) {
         this.supervisorName = supervisorName;
-    }
-
-
-    // =====================================================
-    // ASSESSMENT STATUS
-    // =====================================================
-
-    public String getAssessmentStatus() {
-        return assessmentStatus;
-    }
-
-    public void setAssessmentStatus(String assessmentStatus) {
         this.assessmentStatus = assessmentStatus;
-    }
-
-
-    // =====================================================
-    // REMARKS
-    // =====================================================
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
         this.remarks = remarks;
+        this.assessedAt = LocalDateTime.now();
     }
 
-
-    // =====================================================
-    // ASSESSED AT
-    // =====================================================
-
-    public LocalDateTime getAssessedAt() {
-        return assessedAt;
-    }
-
-    public void setAssessedAt(LocalDateTime assessedAt) {
-        this.assessedAt = assessedAt;
+    @PrePersist
+    @PreUpdate
+    protected void onUpdate() {
+        this.assessedAt = LocalDateTime.now();
     }
 }

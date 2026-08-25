@@ -16,397 +16,168 @@ public class SupervisorAssessmentService {
     private final SupervisorAssessmentRepository assessmentRepository;
     private final PelTrainingRecordRepository trainingRecordRepository;
 
-
     // =====================================================
     // CONSTRUCTOR
     // =====================================================
-
     public SupervisorAssessmentService(
             SupervisorAssessmentRepository assessmentRepository,
             PelTrainingRecordRepository trainingRecordRepository) {
 
-        this.assessmentRepository =
-                assessmentRepository;
-
-        this.trainingRecordRepository =
-                trainingRecordRepository;
+        this.assessmentRepository = assessmentRepository;
+        this.trainingRecordRepository = trainingRecordRepository;
     }
-
 
     // =====================================================
     // GET ALL ASSESSMENTS
     // =====================================================
-
     public List<SupervisorAssessment> getAllAssessments() {
-
         return assessmentRepository.findAll();
     }
-
 
     // =====================================================
     // GET PENDING ASSESSMENTS
     // =====================================================
-
     public List<SupervisorAssessment> getPendingAssessments() {
-
-        return assessmentRepository
-                .findByAssessmentStatusOrderByIdDesc(
-                        "PENDING"
-                );
+        return assessmentRepository.findByAssessmentStatusOrderByIdDesc("PENDING");
     }
-
 
     // =====================================================
     // GET ASSESSMENT BY ID
     // =====================================================
-
     public SupervisorAssessment getById(Long id) {
-
-        return assessmentRepository
-                .findById(id)
-                .orElse(null);
+        return assessmentRepository.findById(id).orElse(null);
     }
-
 
     // =====================================================
     // GET ASSESSMENT BY TRAINING RECORD ID
     // =====================================================
-
-    public SupervisorAssessment getByTrainingRecordId(
-            Long trainingRecordId) {
-
-        return assessmentRepository
-                .findByTrainingRecordId(
-                        trainingRecordId
-                )
-                .orElse(null);
+    public SupervisorAssessment getByTrainingRecordId(Long trainingRecordId) {
+        return assessmentRepository.findByTrainingRecordId(trainingRecordId).orElse(null);
     }
 
-
     // =====================================================
-    // CREATE ASSESSMENT
+    // CREATE INITIAL PENDING ASSESSMENT
     // =====================================================
-
     @Transactional
-    public SupervisorAssessment createAssessment(
-            Long trainingRecordId) {
+    public SupervisorAssessment createAssessment(Long trainingRecordId) {
 
-        /*
-         * Check whether assessment already exists
-         * for this training record.
-         */
-
-        SupervisorAssessment existing =
-                assessmentRepository
-                        .findByTrainingRecordId(
-                                trainingRecordId
-                        )
-                        .orElse(null);
-
+        SupervisorAssessment existing = assessmentRepository
+                .findByTrainingRecordId(trainingRecordId)
+                .orElse(null);
 
         if (existing != null) {
-
             return existing;
         }
 
+        PelTrainingRecord record = trainingRecordRepository
+                .findById(trainingRecordId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Training record not found: " + trainingRecordId
+                ));
 
-        /*
-         * Find the original training record.
-         */
+        SupervisorAssessment assessment = new SupervisorAssessment();
+        assessment.setTrainingRecordId(record.getId());
+        assessment.setEmployeeId(record.getEmployeeId());
+        assessment.setEmployeeName(record.getEmployeeName());
+        assessment.setAssessmentStatus("PENDING");
+        assessment.setSupervisorName(null);
+        assessment.setRemarks(null);
+        assessment.setAssessedAt(null);
 
-        PelTrainingRecord record =
-                trainingRecordRepository
-                        .findById(trainingRecordId)
-                        .orElseThrow(() ->
-                                new IllegalArgumentException(
-                                        "Training record not found: "
-                                                + trainingRecordId
-                                )
-                        );
-
-
-        /*
-         * Create new assessment.
-         */
-
-        SupervisorAssessment assessment =
-                new SupervisorAssessment();
-
-
-        /*
-         * Store Training Record ID.
-         */
-
-        assessment.setTrainingRecordId(
-                record.getId()
-        );
-
-
-        /*
-         * Copy employee information.
-         */
-
-        assessment.setEmployeeId(
-                record.getEmployeeId()
-        );
-
-        assessment.setEmployeeName(
-                record.getEmployeeName()
-        );
-
-
-        /*
-         * Initial status.
-         */
-
-        assessment.setAssessmentStatus(
-                "PENDING"
-        );
-
-
-        /*
-         * Initial supervisor information.
-         */
-
-        assessment.setSupervisorName(
-                null
-        );
-
-        assessment.setRemarks(
-                null
-        );
-
-        assessment.setAssessedAt(
-                null
-        );
-
-
-        /*
-         * Save assessment.
-         */
-
-        return assessmentRepository.save(
-                assessment
-        );
+        return assessmentRepository.save(assessment);
     }
 
+    // =====================================================
+    // SAVE ASSESSMENT (WITH DYNAMIC DROPDOWN STATUS & REMARKS)
+    // =====================================================
+    @Transactional
+    public SupervisorAssessment saveAssessment(
+            Long trainingRecordId,
+            String supervisorName,
+            String remarks,
+            String status) {
+
+        SupervisorAssessment assessment = assessmentRepository
+                .findByTrainingRecordId(trainingRecordId)
+                .orElseGet(() -> createAssessment(trainingRecordId));
+
+        /*
+         * Dropdown status set (Satisfactory, Needs Review, Approved, Rejected etc.)
+         */
+        if (status != null && !status.trim().isEmpty()) {
+            assessment.setAssessmentStatus(status.trim());
+        } else {
+            assessment.setAssessmentStatus("APPROVED");
+        }
+
+        assessment.setSupervisorName(supervisorName);
+        assessment.setRemarks(remarks);
+        assessment.setAssessedAt(LocalDateTime.now());
+
+        return assessmentRepository.save(assessment);
+    }
 
     // =====================================================
-    // APPROVE TRAINING RECORD
+    // APPROVE TRAINING RECORD (OVERLOADED FOR COMPATIBILITY)
     // =====================================================
-
     @Transactional
     public SupervisorAssessment approve(
             Long trainingRecordId,
             String supervisorName,
             String remarks) {
 
-        /*
-         * IMPORTANT:
-         *
-         * The ID coming from the Supervisor Assessment
-         * page is PelTrainingRecord ID.
-         *
-         * Therefore we must NOT use:
-         *
-         * assessmentRepository.findById(trainingRecordId)
-         *
-         * because that searches by SupervisorAssessment ID.
-         *
-         * Instead we search by trainingRecordId.
-         */
-
-        SupervisorAssessment assessment =
-                assessmentRepository
-                        .findByTrainingRecordId(
-                                trainingRecordId
-                        )
-                        .orElseGet(() ->
-                                createAssessment(
-                                        trainingRecordId
-                                )
-                        );
-
-
-        /*
-         * Update assessment status.
-         */
-
-        assessment.setAssessmentStatus(
-                "APPROVED"
-        );
-
-
-        /*
-         * Store supervisor name.
-         */
-
-        assessment.setSupervisorName(
-                supervisorName
-        );
-
-
-        /*
-         * Store supervisor remarks.
-         */
-
-        assessment.setRemarks(
-                remarks
-        );
-
-
-        /*
-         * Store assessment time.
-         */
-
-        assessment.setAssessedAt(
-                LocalDateTime.now()
-        );
-
-
-        /*
-         * Save updated assessment.
-         */
-
-        return assessmentRepository.save(
-                assessment
-        );
+        return saveAssessment(trainingRecordId, supervisorName, remarks, "APPROVED");
     }
 
+    @Transactional
+    public SupervisorAssessment approve(
+            Long trainingRecordId,
+            String supervisorName,
+            String remarks,
+            String status) {
+
+        return saveAssessment(trainingRecordId, supervisorName, remarks, status);
+    }
 
     // =====================================================
-    // REJECT TRAINING RECORD
+    // REJECT TRAINING RECORD (OVERLOADED FOR COMPATIBILITY)
     // =====================================================
-
     @Transactional
     public SupervisorAssessment reject(
             Long trainingRecordId,
             String supervisorName,
             String remarks) {
 
-        /*
-         * Find assessment using Training Record ID.
-         *
-         * If assessment does not exist,
-         * create a new one first.
-         */
-
-        SupervisorAssessment assessment =
-                assessmentRepository
-                        .findByTrainingRecordId(
-                                trainingRecordId
-                        )
-                        .orElseGet(() ->
-                                createAssessment(
-                                        trainingRecordId
-                                )
-                        );
-
-
-        /*
-         * Update status.
-         */
-
-        assessment.setAssessmentStatus(
-                "REJECTED"
-        );
-
-
-        /*
-         * Store supervisor name.
-         */
-
-        assessment.setSupervisorName(
-                supervisorName
-        );
-
-
-        /*
-         * Store supervisor remarks.
-         */
-
-        assessment.setRemarks(
-                remarks
-        );
-
-
-        /*
-         * Store assessment time.
-         */
-
-        assessment.setAssessedAt(
-                LocalDateTime.now()
-        );
-
-
-        /*
-         * Save updated assessment.
-         */
-
-        return assessmentRepository.save(
-                assessment
-        );
+        return saveAssessment(trainingRecordId, supervisorName, remarks, "REJECTED");
     }
 
+    @Transactional
+    public SupervisorAssessment reject(
+            Long trainingRecordId,
+            String supervisorName,
+            String remarks,
+            String status) {
+
+        return saveAssessment(trainingRecordId, supervisorName, remarks, status);
+    }
 
     // =====================================================
     // RESET ASSESSMENT TO PENDING
     // =====================================================
-
     @Transactional
-    public SupervisorAssessment resetToPending(
-            Long assessmentId) {
+    public SupervisorAssessment resetToPending(Long assessmentId) {
 
-        /*
-         * resetToPending() receives the actual
-         * SupervisorAssessment ID.
-         *
-         * Therefore findById() is correct here.
-         */
+        SupervisorAssessment assessment = assessmentRepository
+                .findById(assessmentId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Assessment not found: " + assessmentId
+                ));
 
-        SupervisorAssessment assessment =
-                assessmentRepository
-                        .findById(assessmentId)
-                        .orElseThrow(() ->
-                                new IllegalArgumentException(
-                                        "Assessment not found: "
-                                                + assessmentId
-                                )
-                        );
+        assessment.setAssessmentStatus("PENDING");
+        assessment.setSupervisorName(null);
+        assessment.setRemarks(null);
+        assessment.setAssessedAt(null);
 
-
-        /*
-         * Reset status.
-         */
-
-        assessment.setAssessmentStatus(
-                "PENDING"
-        );
-
-
-        /*
-         * Clear supervisor information.
-         */
-
-        assessment.setSupervisorName(
-                null
-        );
-
-        assessment.setRemarks(
-                null
-        );
-
-        assessment.setAssessedAt(
-                null
-        );
-
-
-        /*
-         * Save assessment.
-         */
-
-        return assessmentRepository.save(
-                assessment
-        );
+        return assessmentRepository.save(assessment);
     }
 }

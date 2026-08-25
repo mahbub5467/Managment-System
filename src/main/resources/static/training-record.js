@@ -1,306 +1,146 @@
 /* =====================================================
-   PRINT RECORD
+   TRAINING RECORD MAIN JAVASCRIPT
 ===================================================== */
 
-function printRecord(id) {
+/* Context Path Helper */
+function getContextPath() {
+    return window.contextPath !== undefined ? window.contextPath : '';
+}
 
+/* =====================================================
+   PRINT RECORD
+===================================================== */
+function printRecord(id) {
     if (!id) {
         alert("Invalid training record.");
         return;
     }
 
-    const contextPath = "${pageContext.request.contextPath}";
+    const contextPath = getContextPath();
 
     window.open(
-        contextPath + "/training-record/print/" + id,
+        contextPath + "/training-record/print/" + encodeURIComponent(id),
         "_blank"
     );
 }
 
+/* =====================================================
+   RADIO BUTTON FILTER (TRAINING TYPE)
+===================================================== */
+function filterTableByTrainingType(selectedType) {
+    filterTable();
+}
 
 /* =====================================================
-   DOM READY
+   UNIFIED SEARCH & FILTER FUNCTION
 ===================================================== */
+function filterTable() {
+    const searchInput = document.getElementById("tableSearch");
+    const clearButton = document.getElementById("clearSearch");
+    const noSearchResult = document.getElementById("noSearchResult");
+    const recordCount = document.getElementById("recordCount");
+    const rows = document.querySelectorAll(".training-row");
 
-document.addEventListener("DOMContentLoaded", function () {
+    const searchText = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const selectedRadio = document.querySelector('input[name="trainingTypeFilter"]:checked');
+    const selectedType = selectedRadio ? selectedRadio.value.toLowerCase() : "all";
 
-    const searchInput =
-        document.getElementById("tableSearch");
+    let visibleCount = 0;
 
-    const clearButton =
-        document.getElementById("clearSearch");
+    rows.forEach(function (row) {
+        const rowType = (row.getAttribute("data-training-type") || "").toLowerCase();
+        const searchData = row.textContent.trim().toLowerCase();
 
-    const tableBody =
-        document.getElementById("trainingTableBody");
+        const matchesType = (selectedType === "all" || rowType === selectedType);
+        const matchesSearch = (searchText === "" || searchData.includes(searchText));
 
-    const noSearchResult =
-        document.getElementById("noSearchResult");
-
-    const recordCount =
-        document.getElementById("recordCount");
-
-
-    /*
-     * IMPORTANT:
-     * JSP uses:
-     *
-     * <tr class="training-row">
-     *
-     * So JS must use .training-row
-     */
-
-    const rows =
-        document.querySelectorAll(".training-row");
-
-
-    /* =================================================
-       UPDATE RECORD COUNT
-    ================================================= */
-
-    function updateRecordCount(count) {
-
-        if (recordCount) {
-            recordCount.textContent = count;
+        if (matchesType && matchesSearch) {
+            row.style.display = "";
+            visibleCount++;
+        } else {
+            row.style.display = "none";
         }
-
-    }
-
-
-    /* =================================================
-       INITIAL COUNT
-    ================================================= */
-
-    updateRecordCount(rows.length);
-
-
-    /* =================================================
-       SEARCH INPUT NOT FOUND
-    ================================================= */
-
-    if (!searchInput) {
-        return;
-    }
-
-
-    /* =================================================
-       SEARCH
-    ================================================= */
-
-    searchInput.addEventListener("input", function () {
-
-        const searchText =
-            searchInput.value
-                .trim()
-                .toLowerCase();
-
-
-        let visibleCount = 0;
-
-
-        /* ---------------------------------------------
-           LOOP THROUGH RECORDS
-        --------------------------------------------- */
-
-        rows.forEach(function (row) {
-
-            /*
-             * Search entire row text.
-             *
-             * This means user can search:
-             * Employee ID
-             * Employee Name
-             * Designation
-             * Training Type
-             * Course
-             * Training Date
-             * Certificate Date
-             * Approved
-             * etc.
-             */
-
-            const searchData =
-                row.textContent
-                    .trim()
-                    .toLowerCase();
-
-
-            /* -----------------------------------------
-               MATCH
-            ----------------------------------------- */
-
-            if (
-                searchText === "" ||
-                searchData.includes(searchText)
-            ) {
-
-                row.style.display = "";
-
-                visibleCount++;
-
-            } else {
-
-                row.style.display = "none";
-
-            }
-
-        });
-
-
-        /* =================================================
-           UPDATE COUNT
-        ================================================= */
-
-        updateRecordCount(visibleCount);
-
-
-        /* =================================================
-           NO SEARCH RESULT
-        ================================================= */
-
-        if (noSearchResult) {
-
-            if (
-                searchText !== "" &&
-                visibleCount === 0
-            ) {
-
-                noSearchResult.style.display = "table-row";
-
-            } else {
-
-                noSearchResult.style.display = "none";
-
-            }
-
-        }
-
-
-        /* =================================================
-           CLEAR BUTTON
-        ================================================= */
-
-        if (clearButton) {
-
-            if (searchText !== "") {
-
-                clearButton.classList.add("show");
-
-            } else {
-
-                clearButton.classList.remove("show");
-
-            }
-
-        }
-
     });
 
+    /* Update Count */
+    if (recordCount) {
+        recordCount.textContent = visibleCount;
+    }
 
-    /* =================================================
-       ESCAPE KEY
-    ================================================= */
-
-    searchInput.addEventListener("keydown", function (event) {
-
-        if (
-            event.key === "Escape" ||
-            event.key === "Esc"
-        ) {
-
-            clearTableSearch();
-
+    /* Toggle No Search Result Row */
+    if (noSearchResult) {
+        if (visibleCount === 0 && rows.length > 0) {
+            noSearchResult.style.display = "table-row";
+        } else {
+            noSearchResult.style.display = "none";
         }
+    }
 
-    });
-
-
-});
-
+    /* Toggle Clear Button */
+    if (clearButton) {
+        if (searchText !== "") {
+            clearButton.classList.add("show");
+        } else {
+            clearButton.classList.remove("show");
+        }
+    }
+}
 
 /* =====================================================
    CLEAR TABLE SEARCH
 ===================================================== */
-
 function clearTableSearch() {
-
-    const searchInput =
-        document.getElementById("tableSearch");
-
-    const clearButton =
-        document.getElementById("clearSearch");
-
-    const noSearchResult =
-        document.getElementById("noSearchResult");
-
-    const recordCount =
-        document.getElementById("recordCount");
-
-
-    /*
-     * IMPORTANT:
-     * Same class as JSP:
-     *
-     * <tr class="training-row">
-     */
-
-    const rows =
-        document.querySelectorAll(".training-row");
-
-
-    /* =================================================
-       CLEAR INPUT
-    ================================================= */
+    const searchInput = document.getElementById("tableSearch");
 
     if (searchInput) {
-
         searchInput.value = "";
-
         searchInput.focus();
-
     }
 
-
-    /* =================================================
-       SHOW ALL RECORDS
-    ================================================= */
-
-    rows.forEach(function (row) {
-
-        row.style.display = "";
-
-    });
-
-
-    /* =================================================
-       UPDATE COUNT
-    ================================================= */
-
-    if (recordCount) {
-
-        recordCount.textContent = rows.length;
-
+    /* Reset Radio Filter to 'All' */
+    const allRadio = document.querySelector('input[name="trainingTypeFilter"][value="all"]');
+    if (allRadio) {
+        allRadio.checked = true;
     }
 
-
-    /* =================================================
-       HIDE NO RESULT
-    ================================================= */
-
-    if (noSearchResult) {
-
-        noSearchResult.style.display = "none";
-
-    }
-
-
-    /* =================================================
-       HIDE CLEAR BUTTON
-    ================================================= */
-
-    if (clearButton) {
-
-        clearButton.classList.remove("show");
-
-    }
-
+    filterTable();
 }
+
+/* =====================================================
+   DOM READY
+===================================================== */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("tableSearch");
+
+    /* Populate Header Dates */
+    const todayStr = new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    }).replace(/ /g, "-");
+
+    const dayOpened = document.getElementById("dayOpenedDate");
+    const serverDate = document.getElementById("serverDate");
+
+    if (dayOpened) dayOpened.textContent = todayStr;
+    if (serverDate) serverDate.textContent = todayStr;
+
+    /* Initialize Filter on Load */
+    filterTable();
+
+    /* Search Input Listener */
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            filterTable();
+        });
+
+        /* Escape Key Support */
+        searchInput.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" || event.key === "Esc") {
+                clearTableSearch();
+            }
+        });
+    }
+
+});

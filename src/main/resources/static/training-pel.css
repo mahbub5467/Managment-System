@@ -6,22 +6,16 @@
     box-sizing: border-box;
 }
 
-
 html,
 body {
     margin: 0;
     padding: 0;
-
     width: 100%;
     min-height: 100%;
-
     font-family: Arial, Helvetica, sans-serif;
-
     background: #f4f7f9;
-
     color: #263b48;
 }
-
 
 button,
 input,
@@ -30,19 +24,15 @@ textarea {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
 /* =====================================================
    PAGE
 ===================================================== */
 
 .page-wrapper {
     min-height: 100vh;
-
     display: flex;
-
     flex-direction: column;
 }
-
 
 /* =====================================================
    HEADER
@@ -50,72 +40,47 @@ textarea {
 
 .top-header {
     width: 100%;
-
     min-height: 90px;
-
     padding: 10px 35px;
-
     display: flex;
-
     align-items: center;
-
     background: #ffffff;
-
     border-bottom: 1px solid #d9e3e9;
 }
 
-
 .header-left {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
-
 
 .caab-logo {
     width: 64px;
     height: 64px;
-
     object-fit: contain;
 }
 
-
 .header-title h1 {
     margin: 0;
-
     color: #15517e;
-
     font-size: 24px;
-
     font-weight: 700;
 }
-
 
 .header-title h2 {
     margin: 6px 0 0;
-
     color: #214a68;
-
     font-size: 16px;
-
     font-weight: 700;
 }
 
-
 .header-right {
     margin-left: auto;
-
     text-align: right;
-
     color: #577384;
-
     font-size: 11px;
-
     line-height: 1.8;
 }
-
 
 /* =====================================================
    NAVBAR
@@ -123,116 +88,74 @@ textarea {
 
 .main-navbar {
     height: 48px;
-
     display: flex;
-
     align-items: center;
-
     padding: 0 35px;
-
     background: linear-gradient(
             to right,
             #1688bd,
             #1479ae,
             #0e6999
     );
-
-    box-shadow:
-            0 2px 5px rgba(0,0,0,.12);
+    box-shadow: 0 2px 5px rgba(0,0,0,.12);
 }
-
 
 .home-link {
     height: 100%;
-
     display: flex;
-
     align-items: center;
-
     gap: 8px;
-
     padding: 0 10px;
-
     color: #ffffff;
-
     text-decoration: none;
-
     font-size: 14px;
-
     font-weight: 600;
 }
 
-
 .home-link:hover {
     background: rgba(255,255,255,.12);
-
     color: #ffffff;
 }
 
-
 .nav-right {
     margin-left: auto;
-
     display: flex;
-
     align-items: center;
-
     gap: 8px;
 }
-
 
 .nav-circle {
     width: 34px;
     height: 34px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     border-radius: 50%;
-
     border: 1px solid rgba(255,255,255,.3);
-
     color: #ffffff;
-
     background: rgba(255,255,255,.12);
 }
-
 
 .nav-circle:hover {
     background: rgba(255,255,255,.25);
 }
 
-
 .logout {
     height: 34px;
-
     min-width: 100px;
-
     margin-left: 5px;
-
     border: none;
-
     border-radius: 18px;
-
     background: rgba(255,255,255,.13);
-
     color: #ffffff;
-
     font-size: 13px;
-
     font-weight: 600;
-
     cursor: pointer;
 }
-
 
 .logout:hover {
     background: #d9534f;
 }
-
 
 /* =====================================================
    MAIN
@@ -240,12 +163,9 @@ textarea {
 
 .main-area {
     flex: 1;
-
     display: flex;
-
     min-height: 0;
 }
-
 
 /* =====================================================
    SIDEBAR
@@ -253,78 +173,51 @@ textarea {
 
 .sidebar {
     width: 250px;
-
     flex-shrink: 0;
-
     min-height: calc(100vh - 138px);
-
     padding: 20px 0;
-
     background: #eef1f3;
-
     border-right: 1px solid #d8e1e6;
 }
 
-
 .sidebar-title {
     padding: 14px 18px;
-
     color: #ffffff;
-
     background: #1377aa;
-
     font-size: 14px;
-
     font-weight: 700;
 }
-
 
 .sidebar-title i {
     margin-right: 7px;
 }
 
-
 .sidebar-item {
     min-height: 46px;
-
     display: flex;
-
     align-items: center;
-
     padding: 10px 20px;
-
     border-left: 4px solid transparent;
-
     color: #245b78;
-
     text-decoration: none;
-
     font-size: 13px;
 }
 
-
 .sidebar-item:hover {
     background: #e0edf4;
-
     color: #075a8a;
 }
-
 
 .sidebar-item.active {
     background: #d9ebf5;
-
     border-left-color: #147eb4;
-
     color: #075a8a;
-
     font-weight: 700;
 }
-
 
 .sidebar-item i {
     width: 24px;
 }
-
 
 /* =====================================================
    CONTENT
@@ -332,12 +225,9 @@ textarea {
 
 .content {
     flex: 1;
-
     min-width: 0;
-
     padding: 24px 32px 35px;
 }
-
 
 /* =====================================================
    BREADCRUMB
@@ -345,27 +235,18 @@ textarea {
 
 .breadcrumb {
     display: flex;
-
     align-items: center;
-
     flex-wrap: wrap;
-
     gap: 7px;
-
     margin-bottom: 12px;
-
     color: #718794;
-
     font-size: 12px;
 }
 
-
 .breadcrumb a {
     color: #1474aa;
-
     text-decoration: underline;
 }
-
 
 /* =====================================================
    PAGE TITLE
@@ -373,36 +254,24 @@ textarea {
 
 .page-title-row {
     display: flex;
-
     align-items: flex-start;
-
     justify-content: space-between;
-
     gap: 20px;
 }
 
-
 .page-title {
     margin: 0;
-
     color: #164f7d;
-
     font-size: 29px;
-
     font-weight: 700;
 }
 
-
 .page-description {
     margin-top: 6px;
-
     color: #5e7280;
-
     font-size: 13px;
-
     line-height: 1.5;
 }
-
 
 /* =====================================================
    BACK BUTTON
@@ -410,41 +279,25 @@ textarea {
 
 .back-btn {
     flex-shrink: 0;
-
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 8px;
-
     padding: 9px 16px;
-
     border: 1px solid #cbd8df;
-
     border-radius: 5px;
-
     background: #ffffff;
-
     color: #17618f;
-
     text-decoration: none;
-
     font-size: 13px;
-
     font-weight: 600;
 }
 
-
 .back-btn:hover {
     background: #f1f8fc;
-
     border-color: #2386c5;
-
     color: #0d5d8c;
 }
-
 
 /* =====================================================
    CARD
@@ -452,106 +305,61 @@ textarea {
 
 .card {
     margin-top: 20px;
-
     overflow: hidden;
-
     background: #ffffff;
-
     border: 1px solid #d8e3e9;
-
     border-radius: 6px;
-
-    box-shadow:
-            0 2px 8px rgba(30,70,90,.06);
+    box-shadow: 0 2px 8px rgba(30,70,90,.06);
 }
-
 
 .card-header {
     padding: 14px 18px;
-
     color: #175b85;
-
     background: #f7fafc;
-
     border-bottom: 1px solid #dce5ea;
-
     font-size: 16px;
-
     font-weight: 700;
 }
-
 
 .card-header i {
     margin-right: 8px;
 }
 
-
 .card-body {
     padding: 20px;
 }
 
-
 /* =====================================================
-   REQUIRED
+   REQUIRED & FORMS
 ===================================================== */
-
-.required-note {
-    margin-bottom: 17px;
-
-    color: #777;
-
-    font-size: 12px;
-}
-
 
 .required {
     color: #d33;
 }
 
-
-/* =====================================================
-   NORMAL FORM
-===================================================== */
-
 .form-grid {
     width: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     gap: 15px;
 }
 
-
 .form-group {
     width: 100%;
-
     display: grid;
-
-    grid-template-columns:
-        180px minmax(300px, 620px);
-
+    grid-template-columns: 180px minmax(300px, 620px);
     align-items: center;
-
     column-gap: 20px;
 }
 
-
 .form-label {
     margin: 0;
-
     color: #334b5b;
-
     font-size: 14px;
-
     font-weight: 600;
-
     line-height: 1.3;
-
     text-align: right;
 }
-
 
 /* =====================================================
    INPUT / SELECT
@@ -560,65 +368,38 @@ textarea {
 .form-control,
 .form-select {
     width: 100%;
-
     height: 40px;
-
     padding: 7px 11px;
-
     border: 1px solid #c8c8c8;
-
     border-radius: 7px;
-
     outline: none;
-
     color: #333;
-
     background: linear-gradient(
             to bottom,
             #ffffff 0%,
             #fafafa 45%,
             #eeeeee 100%
     );
-
-    box-shadow:
-            inset 0 1px 3px rgba(0,0,0,.08),
-            0 1px 2px rgba(0,0,0,.04);
-
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
     font-size: 14px;
-
     transition: .15s ease;
 }
-
 
 .form-control:hover,
 .form-select:hover {
     border-color: #aaaaaa;
 }
 
-
 .form-control:focus,
 .form-select:focus {
     border-color: #7ea7bd;
-
     background: #ffffff;
-
-    box-shadow:
-            inset 0 1px 3px rgba(0,0,0,.07),
-            0 0 4px rgba(40,110,150,.20);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.07), 0 0 4px rgba(40,110,150,.20);
 }
-
-
-.form-control::placeholder {
-    color: #777;
-
-    opacity: 1;
-}
-
 
 .form-select {
     cursor: pointer;
 }
-
 
 /* =====================================================
    EMPLOYEE SEARCH
@@ -626,250 +407,126 @@ textarea {
 
 .employee-search-wrapper {
     width: 100%;
-
     max-width: 620px;
-
     display: flex;
-
     align-items: center;
-
     gap: 8px;
 }
-
 
 .employee-search-wrapper .form-control {
     flex: 1;
 }
 
-
 .employee-search-btn {
     width: 44px;
     height: 40px;
-
     flex-shrink: 0;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     border: 1px solid #176a9a;
-
     border-radius: 6px;
-
     background: #176a9a;
-
     color: #ffffff;
-
     cursor: pointer;
 }
-
 
 .employee-search-btn:hover {
     background: #10577f;
 }
 
-
 .employee-search-btn:disabled {
     opacity: .65;
-
     cursor: not-allowed;
 }
-
 
 .employee-search-status {
     grid-column: 2;
-
     min-height: 18px;
-
     max-width: 620px;
-
     margin-top: 3px;
-
     font-size: 11px;
 }
 
-
-.employee-search-status.success {
-    color: #16834d;
-}
-
-
-.employee-search-status.error {
-    color: #c0392b;
-}
-
-
-.employee-search-status.loading {
-    color: #547080;
-}
-
-
-/* =====================================================
-   EMPLOYEE AUTO FIELDS
-===================================================== */
+.employee-search-status.success { color: #16834d; }
+.employee-search-status.error { color: #c0392b; }
+.employee-search-status.loading { color: #547080; }
 
 .employee-auto-field {
-    background: linear-gradient(
-            to bottom,
-            #f1f4f5,
-            #e5e9eb
-    );
-
+    background: linear-gradient(to bottom, #f1f4f5, #e5e9eb);
     cursor: not-allowed;
-
     color: #344d5b;
 }
 
-
 /* =====================================================
-   DEPARTMENT
+   TRAINING BLOCK VIEW & FORM STYLES
 ===================================================== */
-
-.department-card {
-    margin-top: 20px;
-}
-
-
-.department-body {
-    min-height: 60px;
-
-    padding: 18px 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-}
-
-
-.department-label {
-    color: #334b5b;
-
-    font-size: 14px;
-
-    font-weight: 600;
-}
-
-
-.department-name {
-    color: #263b48;
-
-    font-size: 14px;
-
-    font-weight: 500;
-}
-
-
-/* =====================================================
-   TRAINING
-===================================================== */
-
-.training-card {
-    margin-top: 20px;
-}
-
 
 .record-description {
     margin-bottom: 17px;
-
     color: #667b88;
-
     font-size: 12px;
-
     line-height: 1.5;
 }
 
-
-.training-entry-area {
-    width: 100%;
-
-    margin-top: 23px;
+.training-details-block {
+    margin-top: 25px;
+    padding: 24px;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 5px solid #147eb4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
 }
-
-
-.training-section {
-    width: 100%;
-}
-
 
 .training-entry-title {
     margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-
 .training-entry-title h3 {
-    margin: 0 0 7px;
-
+    margin: 0 0 6px;
     color: #173f58;
-
     font-size: 18px;
-
     font-weight: 700;
 }
 
-
 .training-entry-title p {
     margin: 0;
-
     color: #667b88;
-
     font-size: 12px;
-
     line-height: 1.5;
 }
 
-
-/* =====================================================
-   VERTICAL TRAINING FORM
-===================================================== */
-
 .training-form-grid {
     width: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     gap: 15px;
 }
 
-
 .training-form-group {
     width: 100%;
-
     display: grid;
-
-    grid-template-columns:
-        180px minmax(300px, 620px);
-
+    grid-template-columns: 180px minmax(300px, 620px);
     align-items: center;
-
     column-gap: 20px;
 }
 
-
 .training-form-label {
     margin: 0;
-
     color: #334b5b;
-
     font-size: 14px;
-
     font-weight: 600;
-
     line-height: 1.3;
-
     text-align: right;
 }
-
 
 .training-form-group > .form-control {
     max-width: 620px;
 }
-
 
 /* =====================================================
    CERTIFICATION
@@ -877,159 +534,92 @@ textarea {
 
 .certification-options {
     min-height: 40px;
-
     display: flex;
-
     align-items: center;
-
     gap: 28px;
 }
 
-
 .certification-option {
     display: flex;
-
     align-items: center;
-
     gap: 6px;
-
     color: #405867;
-
     font-size: 13px;
-
     font-weight: 400;
-
     cursor: pointer;
 }
-
 
 .certification-option input {
     width: 15px;
     height: 15px;
-
     margin: 0;
-
     accent-color: #167db0;
-
     cursor: pointer;
 }
-
-
-/* =====================================================
-   HIDDEN
-===================================================== */
-
-.hidden {
-    display: none !important;
-}
-
-
-/* =====================================================
-   CERTIFICATE DEPENDENT
-===================================================== */
 
 .certificate-dependent {
     width: 100%;
 }
 
-
-.certificate-dependent.hidden {
-    display: none !important;
-}
-
-
 .certificate-upload {
     cursor: pointer;
 }
 
-
 .certificate-upload::file-selector-button {
     margin-right: 8px;
-
     padding: 5px 10px;
-
     border: 1px solid #c3d1d8;
-
     border-radius: 4px;
-
     background: #edf4f7;
-
     color: #3e6275;
-
     cursor: pointer;
 }
-
 
 .certificate-upload::file-selector-button:hover {
     background: #dfeef4;
 }
 
-
 /* =====================================================
-   BUTTONS
+   BUTTONS & ACTIONS
 ===================================================== */
 
 .bottom-actions {
     width: 100%;
-
     display: flex;
-
     justify-content: flex-end;
-
     align-items: center;
-
     gap: 9px;
-
     margin-top: 25px;
-
     padding-top: 16px;
-
     border-top: 1px solid #e0e7eb;
 }
 
-
 .btn {
     min-height: 40px;
-
     padding: 9px 18px;
-
     border-radius: 4px;
-
     font-size: 12px;
-
     font-weight: 700;
-
     cursor: pointer;
 }
 
-
 .btn-cancel {
     border: 1px solid #ccd8de;
-
     background: #edf1f3;
-
     color: #536772;
 }
 
-
-.btn-cancel:hover {
-    background: #e0e7eb;
-}
-
+.btn-cancel:hover { background: #e0e7eb; }
 
 .btn-save {
     border: 1px solid #176a9a;
-
     background: #176a9a;
-
     color: #ffffff;
 }
 
+.btn-save:hover { background: #10577f; }
 
-.btn-save:hover {
-    background: #10577f;
-}
-
+.hidden { display: none !important; }
 
 /* =====================================================
    FOOTER
@@ -1037,206 +627,128 @@ textarea {
 
 .footer {
     min-height: 55px;
-
     padding: 9px 20px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     flex-direction: column;
-
     text-align: center;
-
     background: #1d83b3;
-
     border-top: 5px solid #58b7df;
-
     color: #ffffff;
-
     font-size: 11px;
-
     line-height: 1.7;
 }
-
 
 /* =====================================================
    RESPONSIVE
 ===================================================== */
 
 @media (max-width: 1000px) {
-
-    .sidebar {
-        width: 220px;
-    }
-
-
-    .content {
-        padding: 20px;
-    }
-
-
+    .sidebar { width: 220px; }
+    .content { padding: 20px; }
     .form-group,
     .training-form-group {
-
-        grid-template-columns:
-            160px minmax(250px, 1fr);
+        grid-template-columns: 160px minmax(250px, 1fr);
     }
-
 }
 
-
 @media (max-width: 700px) {
-
-    .sidebar {
-        display: none;
-    }
-
-
-    .content {
-        padding: 18px 14px 25px;
-    }
-
-
-    .top-header {
-        padding: 10px 15px;
-    }
-
-
-    .main-navbar {
-        padding: 0 15px;
-    }
-
-
-    .header-right {
-        display: none;
-    }
-
+    .sidebar { display: none; }
+    .content { padding: 18px 14px 25px; }
+    .top-header { padding: 10px 15px; }
+    .main-navbar { padding: 0 15px; }
+    .header-right { display: none; }
 
     .form-group,
     .training-form-group {
-
         display: flex;
-
         flex-direction: column;
-
         align-items: stretch;
-
         gap: 6px;
     }
 
-
     .form-label,
-    .training-form-label {
-
-        text-align: left;
-    }
-
-
-    .employee-search-status {
-
-        width: 100%;
-
-        max-width: 100%;
-    }
-
-
-    .training-form-group > .form-control {
-
-        max-width: 100%;
-    }
-
-
-    .page-title-row {
-
-        flex-direction: column;
-    }
-
-
-    .certification-options {
-
-        justify-content: flex-start;
-    }
-
-
-    .bottom-actions {
-
-        justify-content: flex-end;
-
-        flex-wrap: wrap;
-    }
-
+    .training-form-label { text-align: left; }
+    .employee-search-status { width: 100%; max-width: 100%; }
+    .training-form-group > .form-control { max-width: 100%; }
+    .page-title-row { flex-direction: column; }
+    .certification-options { justify-content: flex-start; }
+    .bottom-actions { justify-content: flex-end; flex-wrap: wrap; }
+    .training-details-block { padding: 16px; margin-top: 15px; }
 }
-
 
 @media (max-width: 500px) {
-
-    .caab-logo {
-
-        width: 50px;
-        height: 50px;
-    }
-
-
-    .header-title h1 {
-
-        font-size: 16px;
-    }
-
-
-    .header-title h2 {
-
-        font-size: 11px;
-    }
-
-
-    .page-title {
-
-        font-size: 21px;
-    }
-
-
-    .card-body {
-
-        padding: 14px;
-    }
-
-
-    .btn {
-
-        padding: 8px 12px;
-    }
-
+    .caab-logo { width: 50px; height: 50px; }
+    .header-title h1 { font-size: 16px; }
+    .header-title h2 { font-size: 11px; }
+    .page-title { font-size: 21px; }
+    .card-body { padding: 14px; }
+    .btn { padding: 8px 12px; }
 }
-
-
 /* =====================================================
-   PRINT
+   SIDEBAR & ACTIVE STATES
 ===================================================== */
 
-@media print {
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    min-height: calc(100vh - 138px);
+    padding: 20px 0;
+    background: #eef1f3;
+    border-right: 1px solid #d8e1e6;
+}
 
-    .main-navbar,
-    .sidebar,
-    .back-btn,
-    .bottom-actions,
-    .footer {
+.sidebar-title {
+    padding: 14px 18px;
+    color: #ffffff;
+    background: #1377aa;
+    font-size: 14px;
+    font-weight: 700;
+}
 
-        display: none !important;
-    }
+.sidebar-title i {
+    margin-right: 7px;
+}
 
+.sidebar-item {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-left: 4px solid transparent;
+    color: #245b78;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all .2s ease;
+}
 
-    .content {
+.sidebar-item i {
+    width: 24px;
+}
 
-        padding: 10px;
-    }
+.sidebar-item:hover {
+    background: #e0edf4;
+    color: #075a8a;
+}
 
+/* ১. প্রথম মেনু (CAAB Inspector Training Records) - ALWAYS BLUE */
+.sidebar-item:first-child {
+    background: #1377aa !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-left: 4px solid #0e5b83 !important;
+}
 
-    .card {
+.sidebar-item:first-child:hover {
+    background: #10638e !important;
+    color: #ffffff !important;
+}
 
-        box-shadow: none;
-    }
-
+/* ২. বাকি ৩টি মেনুর মধ্যে যেটি ACTIVE (খোলা) থাকবে - LIGHT BLUE */
+.sidebar-item:not(:first-child).active {
+    background: #d9ebf5 !important;
+    border-left-color: #147eb4 !important;
+    color: #075a8a !important;
+    font-weight: 700;
 }

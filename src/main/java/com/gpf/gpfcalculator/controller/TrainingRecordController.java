@@ -26,369 +26,142 @@ import java.util.List;
 @Controller
 public class TrainingRecordController {
 
-    private final PelTrainingRecordRepository
-            trainingRecordRepository;
-
-    private final SupervisorAssessmentRepository
-            assessmentRepository;
-
-
-    // =====================================================
-    // CONSTRUCTOR
-    // =====================================================
+    private final PelTrainingRecordRepository trainingRecordRepository;
+    private final SupervisorAssessmentRepository assessmentRepository;
 
     public TrainingRecordController(
+            PelTrainingRecordRepository trainingRecordRepository,
+            SupervisorAssessmentRepository assessmentRepository) {
 
-            PelTrainingRecordRepository
-                    trainingRecordRepository,
-
-            SupervisorAssessmentRepository
-                    assessmentRepository) {
-
-        this.trainingRecordRepository =
-                trainingRecordRepository;
-
-        this.assessmentRepository =
-                assessmentRepository;
+        this.trainingRecordRepository = trainingRecordRepository;
+        this.assessmentRepository = assessmentRepository;
     }
 
+    @GetMapping("/training/training-record")
+    public String trainingRecord(Model model) {
 
-    // =====================================================
-    // TRAINING RECORD PAGE
-    // ONLY APPROVED RECORDS
-    // =====================================================
+        List<SupervisorAssessment> allAssessments = (List<SupervisorAssessment>) assessmentRepository.findAll();
+        List<PelTrainingRecord> records = getAssessedTrainingRecords(allAssessments);
 
-    @GetMapping("/training-record")
-    public String trainingRecord(
-            Model model) {
-
-        List<SupervisorAssessment>
-                approvedAssessments =
-
-                assessmentRepository
-                        .findByAssessmentStatusOrderByIdDesc(
-                                "APPROVED"
-                        );
-
-
-        List<PelTrainingRecord> records =
-                getApprovedTrainingRecords(
-                        approvedAssessments
-                );
-
-
-        model.addAttribute(
-                "records",
-                records
-        );
-
+        model.addAttribute("records", records);
 
         return "training-record";
     }
-
-
-    // =====================================================
-    // SEARCH
-    // =====================================================
 
     @GetMapping("/training-record/search")
     public String searchTrainingRecord(
-
-            @RequestParam(
-                    required = false
-            )
-            String employeeId,
-
+            @RequestParam(required = false) String employeeId,
             Model model) {
-
 
         List<PelTrainingRecord> records;
 
+        if (employeeId == null || employeeId.trim().isEmpty()) {
+            List<SupervisorAssessment> allAssessments = (List<SupervisorAssessment>) assessmentRepository.findAll();
+            records = getAssessedTrainingRecords(allAssessments);
+        } else {
+            String searchId = employeeId.trim();
+            List<PelTrainingRecord> employeeRecords = trainingRecordRepository.findByEmployeeId(searchId);
 
-        // =================================================
-        // EMPTY SEARCH
-        // =================================================
-
-        if (
-                employeeId == null ||
-                        employeeId.trim().isEmpty()
-        ) {
-
-            List<SupervisorAssessment>
-                    approvedAssessments =
-
-                    assessmentRepository
-                            .findByAssessmentStatusOrderByIdDesc(
-                                    "APPROVED"
-                            );
-
-
-            records =
-                    getApprovedTrainingRecords(
-                            approvedAssessments
-                    );
-
+            records = new ArrayList<>();
+            for (PelTrainingRecord record : employeeRecords) {
+                assessmentRepository.findByTrainingRecordId(record.getId()).ifPresent(assessment -> {
+                    record.setAssessmentStatus(assessment.getAssessmentStatus());
+                    record.setComment(assessment.getRemarks());
+                    records.add(record);
+                });
+            }
         }
 
-
-        // =================================================
-        // SEARCH BY EMPLOYEE
-        // =================================================
-
-        else {
-
-            String searchId =
-                    employeeId.trim();
-
-
-            List<SupervisorAssessment>
-                    filteredAssessments =
-
-                    assessmentRepository
-                            .findByAssessmentStatusAndEmployeeIdOrderByIdDesc(
-                                    "APPROVED",
-                                    searchId
-                            );
-
-
-            records =
-                    getApprovedTrainingRecords(
-                            filteredAssessments
-                    );
-        }
-
-
-        model.addAttribute(
-                "records",
-                records
-        );
-
-
-        model.addAttribute(
-                "searchEmployeeId",
-                employeeId
-        );
-
+        model.addAttribute("records", records);
+        model.addAttribute("searchEmployeeId", employeeId);
 
         return "training-record";
     }
 
+    private List<PelTrainingRecord> getAssessedTrainingRecords(List<SupervisorAssessment> assessments) {
 
-    // =====================================================
-    // APPROVED RECORDS
-    // =====================================================
+        List<PelTrainingRecord> records = new ArrayList<>();
 
-    private List<PelTrainingRecord>
-    getApprovedTrainingRecords(
+        if (assessments == null || assessments.isEmpty()) {
+            return records;
+        }
 
-            List<SupervisorAssessment>
-                    assessments) {
-
-
-        List<PelTrainingRecord> records =
-                new ArrayList<>();
-
-
-        for (
-                SupervisorAssessment assessment :
-                assessments
-        ) {
-
-
-            if (
-                    assessment.getTrainingRecordId()
-                            == null
-            ) {
-
+        for (SupervisorAssessment assessment : assessments) {
+            if (assessment.getTrainingRecordId() == null) {
                 continue;
             }
 
-
-            trainingRecordRepository
-                    .findById(
-                            assessment.getTrainingRecordId()
-                    )
-                    .ifPresent(records::add);
-
+            trainingRecordRepository.findById(assessment.getTrainingRecordId()).ifPresent(record -> {
+                record.setAssessmentStatus(assessment.getAssessmentStatus());
+                record.setComment(assessment.getRemarks());
+                records.add(record);
+            });
         }
-
 
         return records;
     }
 
-
-    // =====================================================
-    // VIEW CERTIFICATE
-    // =====================================================
-
     @GetMapping("/certificate/{id}")
     @ResponseBody
-    public ResponseEntity<byte[]> viewCertificate(
-            @PathVariable Long id) {
+    public ResponseEntity<byte[]> viewCertificate(@PathVariable Long id) {
 
+        PelTrainingRecord record = trainingRecordRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Training record not found"
+                ));
 
-        PelTrainingRecord record =
-
-                trainingRecordRepository
-                        .findById(id)
-                        .orElseThrow(() ->
-                                new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
-                                        "Training record not found"
-                                )
-                        );
-
-
-        if (
-                record.getCertificateData() == null ||
-                        record.getCertificateData().length == 0
-        ) {
-
+        if (record.getCertificateData() == null || record.getCertificateData().length == 0) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Certificate not found"
             );
         }
 
-
-        String contentType =
-                record.getCertificateContentType();
-
-
+        String contentType = record.getCertificateContentType();
         MediaType mediaType;
 
-
         try {
-
-            mediaType =
-                    contentType == null ||
-                            contentType.isBlank()
-
-                            ? MediaType.APPLICATION_OCTET_STREAM
-
-                            : MediaType.parseMediaType(
-                            contentType
-                    );
-
+            mediaType = (contentType == null || contentType.isBlank())
+                    ? MediaType.APPLICATION_OCTET_STREAM
+                    : MediaType.parseMediaType(contentType);
         } catch (Exception e) {
-
-            mediaType =
-                    MediaType.APPLICATION_OCTET_STREAM;
+            mediaType = MediaType.APPLICATION_OCTET_STREAM;
         }
 
-
-        String fileName =
-                record.getCertificateFileName();
-
-
-        if (
-                fileName == null ||
-                        fileName.isBlank()
-        ) {
-
-            fileName = "certificate";
+        String fileName = record.getCertificateFileName();
+        if (fileName == null || fileName.isBlank()) {
+            fileName = "certificate.pdf";
         }
 
+        fileName = fileName.replace("\"", "").replace("\r", "").replace("\n", "");
 
-        fileName =
-                fileName
-                        .replace("\"", "")
-                        .replace("\r", "")
-                        .replace("\n", "");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(mediaType);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"");
+        headers.setContentLength(record.getCertificateData().length);
 
-
-        HttpHeaders headers =
-                new HttpHeaders();
-
-
-        headers.setContentType(
-                mediaType
-        );
-
-
-        headers.set(
-                HttpHeaders.CONTENT_DISPOSITION,
-                "inline; filename=\"" +
-                        fileName +
-                        "\""
-        );
-
-
-        headers.setContentLength(
-                record.getCertificateData().length
-        );
-
-
-        return new ResponseEntity<>(
-                record.getCertificateData(),
-                headers,
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(record.getCertificateData(), headers, HttpStatus.OK);
     }
 
-
-    // =====================================================
-    // PRINT
-    // =====================================================
-
     @GetMapping("/training-record/print/{id}")
-    public String printTrainingRecord(
+    public String printTrainingRecord(@PathVariable Long id, Model model) {
 
-            @PathVariable Long id,
+        PelTrainingRecord record = trainingRecordRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Training record not found"
+                ));
 
-            Model model) {
+        SupervisorAssessment assessment = assessmentRepository.findByTrainingRecordId(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Supervisor assessment not found"
+                ));
 
-
-        PelTrainingRecord record =
-
-                trainingRecordRepository
-                        .findById(id)
-                        .orElseThrow(() ->
-                                new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
-                                        "Training record not found"
-                                )
-                        );
-
-
-        SupervisorAssessment assessment =
-
-                assessmentRepository
-                        .findByTrainingRecordId(id)
-                        .orElseThrow(() ->
-                                new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
-                                        "Supervisor assessment not found"
-                                )
-                        );
-
-
-        if (
-                !"APPROVED".equalsIgnoreCase(
-                        assessment.getAssessmentStatus()
-                )
-        ) {
-
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Only approved records can be printed."
-            );
-        }
-
-
-        model.addAttribute(
-                "record",
-                record
-        );
-
-
-        model.addAttribute(
-                "assessment",
-                assessment
-        );
-
+        model.addAttribute("record", record);
+        model.addAttribute("assessment", assessment);
 
         return "training-record-print";
     }
-
 }

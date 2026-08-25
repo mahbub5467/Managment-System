@@ -1,7 +1,6 @@
 package com.gpf.gpfcalculator.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -12,9 +11,8 @@ public class PelTrainingRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     // =====================================================
-    // EMPLOYEE
+    // EMPLOYEE DETAILS
     // =====================================================
 
     @Column(nullable = false)
@@ -29,9 +27,11 @@ public class PelTrainingRecord {
     @Column(nullable = false)
     private LocalDate joiningDate;
 
+    // Division / Department Field Added
+    private String depName;
 
     // =====================================================
-    // TRAINING
+    // TRAINING DETAILS
     // =====================================================
 
     @Column(nullable = false)
@@ -49,9 +49,8 @@ public class PelTrainingRecord {
 
     private LocalDate trainingDate;
 
-
     // =====================================================
-    // CERTIFICATION
+    // CERTIFICATION DETAILS
     // =====================================================
 
     private String certification;
@@ -62,14 +61,29 @@ public class PelTrainingRecord {
 
     private String certificateContentType;
 
-
     @Lob
     @Column(columnDefinition = "varbinary(max)")
     private byte[] certificateData;
 
+    // =====================================================
+    // TRANSIENT FIELDS (FOR REPORT & ASSESSMENT VIEWS)
+    // =====================================================
+
+    @Transient
+    private String assessmentStatus;
+
+    @Transient
+    private String comment;
 
     // =====================================================
-    // ID
+    // CONSTRUCTORS
+    // =====================================================
+
+    public PelTrainingRecord() {
+    }
+
+    // =====================================================
+    // GETTERS AND SETTERS
     // =====================================================
 
     public Long getId() {
@@ -80,11 +94,6 @@ public class PelTrainingRecord {
         this.id = id;
     }
 
-
-    // =====================================================
-    // EMPLOYEE ID
-    // =====================================================
-
     public String getEmployeeId() {
         return employeeId;
     }
@@ -92,11 +101,6 @@ public class PelTrainingRecord {
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
-
-
-    // =====================================================
-    // EMPLOYEE NAME
-    // =====================================================
 
     public String getEmployeeName() {
         return employeeName;
@@ -106,11 +110,6 @@ public class PelTrainingRecord {
         this.employeeName = employeeName;
     }
 
-
-    // =====================================================
-    // DESIGNATION
-    // =====================================================
-
     public String getDesignation() {
         return designation;
     }
@@ -118,11 +117,6 @@ public class PelTrainingRecord {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
-
-
-    // =====================================================
-    // JOINING DATE
-    // =====================================================
 
     public LocalDate getJoiningDate() {
         return joiningDate;
@@ -132,10 +126,13 @@ public class PelTrainingRecord {
         this.joiningDate = joiningDate;
     }
 
+    public String getDepName() {
+        return depName;
+    }
 
-    // =====================================================
-    // TRAINING TYPE
-    // =====================================================
+    public void setDepName(String depName) {
+        this.depName = depName;
+    }
 
     public String getTrainingType() {
         return trainingType;
@@ -145,11 +142,6 @@ public class PelTrainingRecord {
         this.trainingType = trainingType;
     }
 
-
-    // =====================================================
-    // COURSE TITLE
-    // =====================================================
-
     public String getCourseTitle() {
         return courseTitle;
     }
@@ -158,26 +150,13 @@ public class PelTrainingRecord {
         this.courseTitle = courseTitle;
     }
 
-
-    // =====================================================
-    // INITIAL TRAINING DATE
-    // =====================================================
-
     public LocalDate getInitialTrainingDate() {
         return initialTrainingDate;
     }
 
-    public void setInitialTrainingDate(
-            LocalDate initialTrainingDate) {
-
-        this.initialTrainingDate =
-                initialTrainingDate;
+    public void setInitialTrainingDate(LocalDate initialTrainingDate) {
+        this.initialTrainingDate = initialTrainingDate;
     }
-
-
-    // =====================================================
-    // OJT DATE
-    // =====================================================
 
     public LocalDate getOjtDate() {
         return ojtDate;
@@ -187,42 +166,21 @@ public class PelTrainingRecord {
         this.ojtDate = ojtDate;
     }
 
-
-    // =====================================================
-    // TRAINING DESCRIPTION
-    // =====================================================
-
     public String getTrainingDescription() {
         return trainingDescription;
     }
 
-    public void setTrainingDescription(
-            String trainingDescription) {
-
-        this.trainingDescription =
-                trainingDescription;
+    public void setTrainingDescription(String trainingDescription) {
+        this.trainingDescription = trainingDescription;
     }
-
-
-    // =====================================================
-    // TRAINING PROVIDER
-    // =====================================================
 
     public String getTrainingProvider() {
         return trainingProvider;
     }
 
-    public void setTrainingProvider(
-            String trainingProvider) {
-
-        this.trainingProvider =
-                trainingProvider;
+    public void setTrainingProvider(String trainingProvider) {
+        this.trainingProvider = trainingProvider;
     }
-
-
-    // =====================================================
-    // TRAINING DATE
-    // =====================================================
 
     public LocalDate getTrainingDate() {
         return trainingDate;
@@ -232,11 +190,6 @@ public class PelTrainingRecord {
         this.trainingDate = trainingDate;
     }
 
-
-    // =====================================================
-    // CERTIFICATION
-    // =====================================================
-
     public String getCertification() {
         return certification;
     }
@@ -245,68 +198,51 @@ public class PelTrainingRecord {
         this.certification = certification;
     }
 
-
-    // =====================================================
-    // CERTIFICATE DATE
-    // =====================================================
-
     public LocalDate getCertificateDate() {
         return certificateDate;
     }
 
-    public void setCertificateDate(
-            LocalDate certificateDate) {
-
-        this.certificateDate =
-                certificateDate;
+    public void setCertificateDate(LocalDate certificateDate) {
+        this.certificateDate = certificateDate;
     }
-
-
-    // =====================================================
-    // CERTIFICATE FILE NAME
-    // =====================================================
 
     public String getCertificateFileName() {
         return certificateFileName;
     }
 
-    public void setCertificateFileName(
-            String certificateFileName) {
-
-        this.certificateFileName =
-                certificateFileName;
+    public void setCertificateFileName(String certificateFileName) {
+        this.certificateFileName = certificateFileName;
     }
-
-
-    // =====================================================
-    // CERTIFICATE CONTENT TYPE
-    // =====================================================
 
     public String getCertificateContentType() {
         return certificateContentType;
     }
 
-    public void setCertificateContentType(
-            String certificateContentType) {
-
-        this.certificateContentType =
-                certificateContentType;
+    public void setCertificateContentType(String certificateContentType) {
+        this.certificateContentType = certificateContentType;
     }
-
-
-    // =====================================================
-    // CERTIFICATE DATA
-    // =====================================================
 
     public byte[] getCertificateData() {
         return certificateData;
     }
 
-    public void setCertificateData(
-            byte[] certificateData) {
-
-        this.certificateData =
-                certificateData;
+    public void setCertificateData(byte[] certificateData) {
+        this.certificateData = certificateData;
     }
 
+    public String getAssessmentStatus() {
+        return assessmentStatus;
+    }
+
+    public void setAssessmentStatus(String assessmentStatus) {
+        this.assessmentStatus = assessmentStatus;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

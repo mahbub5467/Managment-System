@@ -1,937 +1,238 @@
 /* =====================================================
-   SUPERVISOR ASSESSMENT
+   SUPERVISOR ASSESSMENT MAIN JAVASCRIPT
 ===================================================== */
 
 let selectedRecordId = null;
 
-
-/* =====================================================
-   GET CONTEXT PATH
-===================================================== */
-
+/* Context Path Helper */
 function getContextPath() {
-
-    const body = document.body;
-
-    if (
-        body &&
-        body.dataset &&
-        typeof body.dataset.contextPath !== "undefined"
-    ) {
-        return body.dataset.contextPath || "";
-    }
-
-    /*
-     * JSP body-তে data-context-path না থাকলে
-     * current URL থেকে context path বের করার চেষ্টা।
-     */
-    const path = window.location.pathname;
-
-    if (!path || path === "/") {
-        return "";
-    }
-
-    /*
-     * Common Spring Boot context path handling.
-     * যদি application root-এ চলে, empty return করবে।
-     */
-    const parts = path.split("/").filter(Boolean);
-
-    if (parts.length === 0) {
-        return "";
-    }
-
-    /*
-     * যদি তোমার application context path থাকে,
-     * body data attribute ব্যবহার করাই সবচেয়ে reliable।
-     */
-    return "";
+    return window.contextPath !== undefined ? window.contextPath : '';
 }
-
 
 /* =====================================================
    OPEN ASSESSMENT MODAL
 ===================================================== */
-
-function openAssessmentModal(
-    id,
-    employeeId,
-    employeeName
-) {
-
+function openAssessmentModal(id, employeeId, employeeName) {
     selectedRecordId = id;
 
-    const modal =
-        document.getElementById("assessmentModal");
-
-    const modalEmployeeId =
-        document.getElementById("modalEmployeeId");
-
-    const modalEmployeeName =
-        document.getElementById("modalEmployeeName");
-
-    const remarks =
-        document.getElementById("remarks");
-
+    const modal = document.getElementById("assessmentModal");
+    const modalEmployeeId = document.getElementById("modalEmployeeId");
+    const modalEmployeeName = document.getElementById("modalEmployeeName");
+    const remarks = document.getElementById("remarks");
+    const statusSelect = document.getElementById("assessmentStatus");
+    const form = document.getElementById("assessmentForm");
 
     if (!modal) {
-
-        console.error(
-            "Assessment modal not found."
-        );
-
+        console.error("Assessment modal not found.");
         return;
     }
 
-
-    /* Employee ID */
-
-    if (modalEmployeeId) {
-
-        modalEmployeeId.textContent =
-            employeeId || "";
-
+    /* Set Modal Form Action URL */
+    if (form) {
+        form.action = getContextPath() + "/supervisor-assessment/save/" + encodeURIComponent(id);
     }
 
+    /* Set Employee Info */
+    if (modalEmployeeId) modalEmployeeId.textContent = employeeId || "";
+    if (modalEmployeeName) modalEmployeeName.textContent = employeeName || "";
 
-    /* Employee Name */
+    /* Reset Fields */
+    if (remarks) remarks.value = "";
+    if (statusSelect) statusSelect.value = "";
 
-    if (modalEmployeeName) {
-
-        modalEmployeeName.textContent =
-            employeeName || "";
-
-    }
-
-
-    /* Clear remarks */
-
-    if (remarks) {
-
-        remarks.value = "";
-
-    }
-
-
-    /* Reset counter */
-
-    updateRemarksCounter();
-
-
-    /* Reset buttons */
-
-    resetAssessmentButtons();
-
-
-    /* Show modal */
-
+    /* Show Modal & Disable Background Scroll */
     modal.style.display = "flex";
-
     document.body.style.overflow = "hidden";
-
-
-    /* Focus remarks */
-
-    if (remarks) {
-
-        setTimeout(function () {
-
-            remarks.focus();
-
-        }, 100);
-
-    }
-
 }
-
 
 /* =====================================================
    CLOSE ASSESSMENT MODAL
 ===================================================== */
-
 function closeAssessmentModal() {
-
-    const modal =
-        document.getElementById("assessmentModal");
-
+    const modal = document.getElementById("assessmentModal");
 
     if (modal) {
-
         modal.style.display = "none";
-
     }
-
 
     document.body.style.overflow = "";
-
-
     selectedRecordId = null;
 
+    const remarks = document.getElementById("remarks");
+    const statusSelect = document.getElementById("assessmentStatus");
 
-    const remarks =
-        document.getElementById("remarks");
-
-
-    if (remarks) {
-
-        remarks.value = "";
-
-    }
-
-
-    updateRemarksCounter();
-
-    resetAssessmentButtons();
-
+    if (remarks) remarks.value = "";
+    if (statusSelect) statusSelect.value = "";
 }
-
 
 /* =====================================================
-   RESET ASSESSMENT BUTTONS
+   FILTER TABLE BY TRAINING TYPE (RADIO BUTTONS)
 ===================================================== */
-
-function resetAssessmentButtons() {
-
-    const approveButton =
-        document.querySelector(".btn-approve");
-
-    const rejectButton =
-        document.querySelector(".btn-reject");
-
-    const cancelButton =
-        document.querySelector(".btn-cancel");
-
-
-    if (approveButton) {
-
-        approveButton.disabled = false;
-
-        approveButton.innerHTML =
-            '<i class="fa-solid fa-circle-check"></i> Assess';
-
-    }
-
-
-    if (rejectButton) {
-
-        rejectButton.disabled = false;
-
-        rejectButton.innerHTML =
-            '<i class="fa-solid fa-circle-xmark"></i> Reject';
-
-    }
-
-
-    if (cancelButton) {
-
-        cancelButton.disabled = false;
-
-    }
-
-}
-
-
-/* =====================================================
-   SUBMIT ASSESSMENT
-===================================================== */
-
-function submitAssessment(action) {
-
-    /* -------------------------------------------------
-       Validate record
-    ------------------------------------------------- */
-
-    if (
-        selectedRecordId === null ||
-        selectedRecordId === undefined ||
-        String(selectedRecordId).trim() === ""
-    ) {
-
-        alert("Invalid training record.");
-
-        return;
-
-    }
-
-
-    /* -------------------------------------------------
-       Validate action
-    ------------------------------------------------- */
-
-    if (
-        action !== "approve" &&
-        action !== "reject"
-    ) {
-
-        alert("Invalid assessment action.");
-
-        return;
-
-    }
-
-
-    /* -------------------------------------------------
-       Remarks
-    ------------------------------------------------- */
-
-    const remarks =
-        document.getElementById("remarks");
-
-
-    if (!remarks) {
-
-        alert("Remarks field not found.");
-
-        return;
-
-    }
-
-
-    const comment =
-        remarks.value.trim();
-
-
-    if (comment === "") {
-
-        alert(
-            "Please enter supervisor remarks."
-        );
-
-        remarks.focus();
-
-        return;
-
-    }
-
-
-    /* -------------------------------------------------
-       Confirmation
-    ------------------------------------------------- */
-
-    const actionText =
-        action === "approve"
-            ? "approve"
-            : "reject";
-
-
-    const confirmation =
-        confirm(
-            "Are you sure you want to "
-            + actionText
-            + " this training record?"
-        );
-
-
-    if (!confirmation) {
-
-        return;
-
-    }
-
-
-    /* -------------------------------------------------
-       Form
-    ------------------------------------------------- */
-
-    const form =
-        document.getElementById("assessmentForm");
-
-
-    if (!form) {
-
-        alert("Assessment form not found.");
-
-        return;
-
-    }
-
-
-    /* -------------------------------------------------
-       Context path
-    ------------------------------------------------- */
-
-    const contextPath =
-        getContextPath();
-
-
-    /* -------------------------------------------------
-       Assessment URL
-    ------------------------------------------------- */
-
-    const url =
-        contextPath
-        + "/supervisor-assessment/"
-        + action
-        + "/"
-        + encodeURIComponent(
-            selectedRecordId
-        );
-
-
-    /* -------------------------------------------------
-       Make sure comment is submitted
-    ------------------------------------------------- */
-
-    let hiddenComment =
-        document.getElementById(
-            "assessmentRemarks"
-        );
-
-
-    /*
-     * JSP-তে hidden input না থাকলেও
-     * এখানে automatically create হবে।
-     */
-
-    if (!hiddenComment) {
-
-        hiddenComment =
-            document.createElement("input");
-
-        hiddenComment.type = "hidden";
-
-        hiddenComment.id =
-            "assessmentRemarks";
-
-        hiddenComment.name =
-            "comment";
-
-        form.appendChild(hiddenComment);
-
-    }
-
-
-    hiddenComment.value =
-        comment;
-
-
-    /* -------------------------------------------------
-       Set form
-    ------------------------------------------------- */
-
-    form.action = url;
-
-    form.method = "POST";
-
-
-    /* -------------------------------------------------
-       Disable buttons
-    ------------------------------------------------- */
-
-    const approveButton =
-        document.querySelector(".btn-approve");
-
-    const rejectButton =
-        document.querySelector(".btn-reject");
-
-    const cancelButton =
-        document.querySelector(".btn-cancel");
-
-
-    if (approveButton) {
-
-        approveButton.disabled = true;
-
-    }
-
-
-    if (rejectButton) {
-
-        rejectButton.disabled = true;
-
-    }
-
-
-    if (cancelButton) {
-
-        cancelButton.disabled = true;
-
-    }
-
-
-    /* -------------------------------------------------
-       Loading text
-    ------------------------------------------------- */
-
-    if (action === "approve") {
-
-        if (approveButton) {
-
-            approveButton.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-
+function filterTableByTrainingType(selectedType) {
+    const rows = document.querySelectorAll("#assessmentTable tbody tr");
+    rows.forEach(function (row) {
+        if (row.classList.contains("search-empty-row")) return;
+
+        const rowType = row.getAttribute("data-training-type");
+        if (!rowType) return;
+
+        const sType = (selectedType || "").trim().toLowerCase();
+        const rType = rowType.trim().toLowerCase();
+
+        if (sType === "all" || rType === sType) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
         }
-
-    } else {
-
-        if (rejectButton) {
-
-            rejectButton.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-
-        }
-
-    }
-
-
-    /* -------------------------------------------------
-       Submit
-    ------------------------------------------------- */
-
-    form.submit();
-
+    });
 }
-
 
 /* =====================================================
    TABLE SEARCH
 ===================================================== */
-
-/*
- * JSP-তে search input:
- *
- * <input
- *     type="text"
- *     id="tableSearch"
- *     placeholder="Search..."
- * >
- *
- * থাকলেই এই search কাজ করবে।
- */
-
 function initializeTableSearch() {
+    const searchInput = document.getElementById("tableSearch");
+    const table = document.querySelector(".assessment-table");
 
-    const searchInput =
-        document.getElementById("tableSearch");
+    if (!searchInput || !table) return;
 
+    const tbody = table.querySelector("tbody");
+    if (!tbody) return;
 
-    const table =
-        document.querySelector(".assessment-table");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
 
+    searchInput.addEventListener("input", function () {
+        const searchValue = this.value.trim().toLowerCase();
+        let visibleCount = 0;
 
-    if (!searchInput || !table) {
+        rows.forEach(function (row) {
+            if (row.classList.contains("search-empty-row")) return;
 
-        return;
+            const rowText = row.textContent.toLowerCase().replace(/\s+/g, " ").trim();
+            const matched = searchValue === "" || rowText.includes(searchValue);
 
-    }
+            if (matched) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
 
-
-    const tbody =
-        table.querySelector("tbody");
-
-
-    if (!tbody) {
-
-        return;
-
-    }
-
-
-    const rows =
-        Array.from(
-            tbody.querySelectorAll("tr")
-        );
-
-
-    /*
-     * Search event
-     */
-
-    searchInput.addEventListener(
-        "input",
-        function () {
-
-            const searchValue =
-                this.value
-                    .trim()
-                    .toLowerCase();
-
-
-            let visibleCount = 0;
-
-
-            rows.forEach(function (row) {
-
-                /*
-                 * Empty row / no-record row skip
-                 */
-
-                if (
-                    row.classList.contains("search-empty-row")
-                ) {
-
-                    return;
-
-                }
-
-
-                const rowText =
-                    row.textContent
-                        .toLowerCase()
-                        .replace(/\s+/g, " ")
-                        .trim();
-
-
-                const matched =
-                    searchValue === ""
-                    ||
-                    rowText.includes(
-                        searchValue
-                    );
-
-
-                if (matched) {
-
-                    row.style.display = "";
-
-                    visibleCount++;
-
-                } else {
-
-                    row.style.display = "none";
-
-                }
-
-            });
-
-
-            updateSearchCount(
-                visibleCount,
-                searchValue,
-                tbody
-            );
-
-        }
-    );
-
+        updateSearchCount(visibleCount, searchValue, tbody);
+    });
 }
-
 
 /* =====================================================
-   SEARCH COUNT
+   SEARCH COUNT & EMPTY RESULT MESSAGE
 ===================================================== */
-
-function updateSearchCount(
-    visibleCount,
-    searchValue,
-    tbody
-) {
-
-    const summaryCount =
-        document.querySelector(".summary-count");
-
-
-    if (summaryCount) {
-
-        summaryCount.textContent =
-            visibleCount;
-
-    }
-
-
-    /*
-     * Existing "No Training Records Found"
-     * row থাকলে search-এর জন্য আলাদা row তৈরি
-     * করা হবে।
-     */
-
-    let emptySearchRow =
-        tbody.querySelector(
-            ".search-empty-row"
-        );
-
+function updateSearchCount(visibleCount, searchValue, tbody) {
+    let emptySearchRow = tbody.querySelector(".search-empty-row");
 
     if (searchValue !== "" && visibleCount === 0) {
-
         if (!emptySearchRow) {
+            emptySearchRow = document.createElement("tr");
+            emptySearchRow.className = "search-empty-row";
 
-            emptySearchRow =
-                document.createElement("tr");
+            const td = document.createElement("td");
+            const columnCount = document.querySelectorAll("#assessmentTable thead th").length || 10;
 
-            emptySearchRow.className =
-                "search-empty-row";
-
-
-            const td =
-                document.createElement("td");
-
-            const columnCount =
-                document.querySelectorAll(
-                    ".assessment-table thead th"
-                ).length || 1;
-
-
-            td.colSpan =
-                columnCount;
-
-            td.className =
-                "empty";
-
-
-            td.innerHTML =
-                '<div class="empty-icon">' +
-                '<i class="fa-solid fa-magnifying-glass"></i>' +
-                '</div>' +
-
-                '<div class="empty-title">' +
-                'No Matching Records' +
-                '</div>' +
-
-                '<div class="empty-text">' +
-                'No training record matches your search.' +
-                '</div>';
-
+            td.colSpan = columnCount;
+            td.className = "empty";
+            td.innerHTML = `
+                <div class="empty-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="empty-title">No Matching Records</div>
+                <div class="empty-text">No training record matches your search.</div>
+            `;
 
             emptySearchRow.appendChild(td);
-
-            tbody.appendChild(
-                emptySearchRow
-            );
-
+            tbody.appendChild(emptySearchRow);
         }
-
-
         emptySearchRow.style.display = "";
-
     } else {
-
         if (emptySearchRow) {
-
-            emptySearchRow.style.display =
-                "none";
-
+            emptySearchRow.style.display = "none";
         }
-
     }
-
 }
-
 
 /* =====================================================
    CLEAR TABLE SEARCH
 ===================================================== */
-
 function clearTableSearch() {
-
-    const searchInput =
-        document.getElementById("tableSearch");
-
-
+    const searchInput = document.getElementById("tableSearch");
     if (searchInput) {
-
         searchInput.value = "";
-
-        searchInput.dispatchEvent(
-            new Event("input")
-        );
-
+        searchInput.dispatchEvent(new Event("input"));
         searchInput.focus();
-
     }
-
 }
 
-
 /* =====================================================
-   REMARKS COUNTER
+   INITIALIZATION & EVENT LISTENERS
 ===================================================== */
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("assessmentModal");
 
-function updateRemarksCounter() {
-
-    const remarks =
-        document.getElementById("remarks");
-
-
-    const counter =
-        document.querySelector(
-            ".remarks-counter"
-        );
-
-
-    if (!remarks || !counter) {
-
-        return;
-
+    if (modal) {
+        modal.style.display = "none";
     }
 
+    document.body.style.overflow = "";
+    selectedRecordId = null;
 
-    counter.textContent =
-        remarks.value.length
-        + " / 1000 characters";
+    /* Initialize Table Search */
+    initializeTableSearch();
 
-}
-
-
-/* =====================================================
-   INITIALIZATION
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-
-        /* ---------------------------------------------
-           Modal closed by default
-        --------------------------------------------- */
-
-        const modal =
-            document.getElementById(
-                "assessmentModal"
-            );
-
-
-        if (modal) {
-
-            modal.style.display = "none";
-
-        }
-
-
-        document.body.style.overflow = "";
-
-
-        selectedRecordId = null;
-
-
-        /* ---------------------------------------------
-           Search
-        --------------------------------------------- */
-
-        initializeTableSearch();
-
-
-        /* ---------------------------------------------
-           Remarks counter
-        --------------------------------------------- */
-
-        const remarks =
-            document.getElementById(
-                "remarks"
-            );
-
-
-        if (remarks) {
-
-            remarks.addEventListener(
-                "input",
-                updateRemarksCounter
-            );
-
-            updateRemarksCounter();
-
-        }
-
+    /* Apply initial filter */
+    const selectedRadio = document.querySelector('input[name="trainingTypeFilter"]:checked');
+    if (selectedRadio) {
+        filterTableByTrainingType(selectedRadio.value);
+    } else {
+        filterTableByTrainingType("all");
     }
-);
 
+    /* Header Date Population */
+    const todayStr = new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    }).replace(/ /g, "-");
 
-/* =====================================================
-   CLOSE MODAL - OUTSIDE CLICK
-===================================================== */
+    const dayOpened = document.getElementById("dayOpenedDate");
+    const serverDate = document.getElementById("serverDate");
 
-window.addEventListener(
-    "click",
-    function (event) {
+    if (dayOpened) dayOpened.textContent = todayStr;
+    if (serverDate) serverDate.textContent = todayStr;
 
-        const modal =
-            document.getElementById(
-                "assessmentModal"
-            );
+    /* Form Validation before Submit */
+    const form = document.getElementById("assessmentForm");
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            const statusSelect = document.getElementById("assessmentStatus");
+            if (statusSelect && !statusSelect.value) {
+                e.preventDefault();
+                alert("Please select an Assessment Status.");
+                statusSelect.focus();
+            }
+        });
+    }
+});
 
+/* Close Modal on Outside Click */
+window.addEventListener("click", function (event) {
+    const modal = document.getElementById("assessmentModal");
+    if (modal && event.target === modal && modal.style.display === "flex") {
+        closeAssessmentModal();
+    }
+});
 
-        if (
-            modal &&
-            event.target === modal &&
-            modal.style.display === "flex"
-        ) {
-
+/* ESC Key to Close Modal */
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" || event.key === "Esc") {
+        const modal = document.getElementById("assessmentModal");
+        if (modal && modal.style.display === "flex") {
             closeAssessmentModal();
-
         }
-
     }
-);
-
-
-/* =====================================================
-   ESC KEY
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            event.key === "Escape" ||
-            event.key === "Esc"
-        ) {
-
-            const modal =
-                document.getElementById(
-                    "assessmentModal"
-                );
-
-
-            if (
-                modal &&
-                modal.style.display === "flex"
-            ) {
-
-                closeAssessmentModal();
-
-            }
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   CTRL + ENTER
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            event.ctrlKey &&
-            event.key === "Enter"
-        ) {
-
-            const modal =
-                document.getElementById(
-                    "assessmentModal"
-                );
-
-
-            if (
-                modal &&
-                modal.style.display === "flex"
-            ) {
-
-                const approveButton =
-                    document.querySelector(
-                        ".btn-approve"
-                    );
-
-
-                if (
-                    approveButton &&
-                    !approveButton.disabled
-                ) {
-
-                    submitAssessment(
-                        "approve"
-                    );
-
-                }
-
-            }
-
-        }
-
-    }
-);
+});

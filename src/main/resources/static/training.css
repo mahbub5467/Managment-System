@@ -1,3 +1,6 @@
+/* =========================================
+   RESET & GLOBAL
+========================================= */
 
 * {
     box-sizing: border-box;
@@ -13,7 +16,6 @@ body {
     background: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
     color: #333;
-
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -32,71 +34,48 @@ body {
             #ffffff 82%,
             #edf7fc 100%
     );
-
     border-top: 3px solid #198ac2;
-
     position: relative;
-
     padding-left: 40px;
 }
-
 
 .caab-logo {
     position: absolute;
     top: 10px;
     left: 40px;
-
     width: 70px;
     height: 70px;
-
     object-fit: contain;
 }
 
-
 .header-title {
     position: absolute;
-
     left: 118px;
     top: 28px;
 }
 
-
 .header-title h1 {
     margin: 0;
-
     font-size: 25px;
-
     font-weight: 700;
-
     color: #1d567f;
-
     letter-spacing: .2px;
 }
 
-
 .header-title h2 {
     margin: 4px 0 0;
-
     font-size: 18px;
-
     color: #333;
-
     font-weight: 700;
 }
 
-
 .header-right {
     position: absolute;
-
     right: 40px;
     top: 42px;
-
     text-align: right;
-
     color: #28618b;
-
     font-size: 14px;
-
     line-height: 24px;
 }
 
@@ -106,109 +85,65 @@ body {
 ========================================= */
 
 .main-navbar {
-
     height: 42px;
-
     background: linear-gradient(
             to bottom,
             #65b0df 0%,
             #1975ad 100%
     );
-
     border-top: 1px solid #82c5e9;
-
     border-bottom: 1px solid #14658f;
-
     color: white;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     padding: 0 40px;
-
 }
-
 
 .home-link {
-
     color: white;
-
     text-decoration: none;
-
     font-size: 15px;
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
 }
-
 
 .home-link i {
-
     font-size: 27px;
-
     text-shadow: 1px 1px 2px #555;
-
 }
-
 
 .nav-right {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
 }
-
 
 .nav-circle {
-
     width: 38px;
-
     height: 38px;
-
     border-radius: 50%;
-
     border: 1px solid rgba(255,255,255,.6);
-
     background: rgba(255,255,255,.12);
-
     color: white;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
 }
-
 
 .logout {
     width: 210px;
     height: 30px;
-
     border: 0;
     border-radius: 20px;
-
     color: white;
     font-weight: bold;
-
-    background:
-            linear-gradient(
-                    to bottom,
-                    #65b1df,
-                    #438fbe
-            );
-
+    background: linear-gradient(
+            to bottom,
+            #65b1df,
+            #438fbe
+    );
     cursor: pointer;
 }
 
@@ -218,351 +153,233 @@ body {
 ========================================= */
 
 .main-area {
-
     flex: 1;
-
     display: flex;
-
     padding: 20px 40px 24px;
-
+    gap: 30px; /* Layout Layout spacing fix */
 }
 
 
-/* =========================================
-   LEFT SIDEBAR
-========================================= */
+/* =========================================================
+   SIDEBAR & CONDITIONAL ACTIVE HIGHLIGHT (FIXED)
+========================================================= */
 
 .sidebar {
-
-    width: 285px;
-
-    flex-shrink: 0;
-
-    background: #f1f1f1;
-
-    border-top: 3px solid #e4e4e4;
-
+    width: 260px;
+    flex: 0 0 260px;
+    margin: 0 !important; /* Alignment fix: removed left margin */
+    background: #ffffff;
+    border: 1px solid #d9e2e7;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    align-self: flex-start;
 }
 
-
+/* Base Link Item Style */
 .sidebar-item {
-
-    min-height: 43px;
-
-    padding: 11px 20px;
-
-    border-bottom: 1px solid #dddddd;
-
-    color: #175986;
-
-    font-size: 16px;
-
-    font-weight: 700;
-
+    min-height: 45px;
     display: flex;
-
     align-items: center;
-
+    gap: 9px;
+    padding: 11px 16px;
+    color: #14577f;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e6e9;
+    border-left: 4px solid transparent;
+    font-size: 13px;
+    font-weight: 600;
     text-decoration: none;
-
+    transition: all .2s ease;
 }
-
 
 .sidebar-item:hover {
-
-    background: #e3edf5;
-
-    color: #0c5685;
-
+    color: #0b527d;
+    background: #eaf5fa;
+    text-decoration: none;
 }
 
+/* 1. প্রথম মেনু (CAAB Inspector Training Records) - ALWAYS SOLID BLUE */
+.sidebar-item:first-child {
+    background: #176fa3 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-left: none !important; /* Removed side indicator strip */
+    padding-left: 16px !important;
+}
 
-.sidebar-item.active {
+.sidebar-item:first-child:hover {
+    background: #145f8c !important;
+    color: #ffffff !important;
+}
 
-    background: #116da4;
-
-    color: white;
-
+/* 2. বাকি ৩টি মেনুর মধ্যে যেটি ACTIVE (খোলা) থাকবে - LIGHT BLUE */
+.sidebar-item:not(:first-child).active {
+    background: #eaf5fa !important;           /* Light Blue Background */
+    color: #176fa3 !important;                /* Blue Text */
+    border-left: 4px solid #176fa3 !important;     /* Left Active Border Line */
+    font-weight: 700;
+    padding-left: 12px;
+    box-shadow: inset 2px 0 5px rgba(23, 111, 163, 0.08);
 }
 
 
 /* =========================================
-   CONTENT
+   CONTENT AREA
 ========================================= */
 
 .content {
-
     flex: 1;
-
-    padding-left: 38px;
-
+    padding-left: 0 !important; /* Content alignment fix */
     min-width: 0;
-
 }
-
 
 .content-header {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: flex-start;
-
     gap: 25px;
-
 }
-
 
 .page-title {
-
     color: #123f62;
-
     font-size: 30px;
-
     font-weight: 700;
-
     margin: 0;
-
 }
 
-
 .page-description {
-
     margin-top: 10px;
-
     color: #555;
-
     font-size: 14px;
-
     line-height: 21px;
-
 }
 
 
 /* =========================================
-   TWO COLUMN SECTION
+   PANELS & SECTIONS
 ========================================= */
 
 .panel {
-
     border: 1px solid #e1e6eb;
-
     border-radius: 6px;
-
     background: white;
-
     box-shadow: 0 2px 5px rgba(0,0,0,.04);
-
 }
-
 
 .panel-header {
-
     height: 58px;
-
     border-bottom: 1px solid #e1e6eb;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     padding: 0 18px;
-
 }
-
 
 .panel-title {
-
     color: #17618f;
-
     font-size: 17px;
-
     font-weight: 700;
-
 }
-
 
 .panel-title i {
-
     margin-right: 9px;
-
 }
-
 
 .view-all {
-
     color: #2184c5;
-
     text-decoration: none;
-
     border: 1px solid #d7e0e7;
-
     border-radius: 5px;
-
     padding: 7px 12px;
-
     font-size: 12px;
-
     background: white;
-
 }
 
-
-/* =========================================
-   SECTION TITLES
-========================================= */
-
 .section-title {
-
     margin: 0;
-
     padding: 16px 18px 8px;
-
     color: #164f73;
-
     font-size: 18px;
     font-weight: 700;
-
     display: flex;
     align-items: center;
     gap: 9px;
 }
 
 .section-title i {
-
     color: #17618f;
-
 }
 
 
 /* =========================================
-   DEPARTMENTS / FOLDERS
+   DEPARTMENT FOLDERS GRID
 ========================================= */
 
 .department-panel {
-
     margin-top: 24px;
-
 }
-
 
 .department-grid {
-
     padding: 8px 16px 16px;
-
     display: grid;
-
-    grid-template-columns:
-                    repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
-
 }
-
 
 .department-folder {
-
     min-height: 92px;
-
     border: 1px solid #dfe6ec;
-
     border-radius: 6px;
-
     background: #fafcfd;
-
     display: flex;
-
     align-items: center;
-
     padding: 15px 20px;
-
     text-decoration: none;
-
     transition: all .2s ease;
-
 }
-
 
 .department-folder:hover {
-
     background: #eef7fd;
-
     border-color: #2181bc;
-
     box-shadow: 0 3px 10px rgba(0,0,0,.07);
-
     transform: translateY(-2px);
-
 }
-
 
 .folder-icon {
-
     width: 54px;
-
     height: 54px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     margin-right: 14px;
-
     background: #edf6fb;
-
     border-radius: 7px;
-
     color: #1680bd;
-
     font-size: 25px;
-
     flex-shrink: 0;
-
 }
-
 
 .department-name {
-
     color: #175c88;
-
     font-size: 17px;
-
     font-weight: 700;
-
 }
-
 
 .department-description {
-
     color: #777;
-
     font-size: 12px;
-
     margin-top: 5px;
-
 }
-
 
 .folder-arrow {
-
     margin-left: auto;
-
     color: #a2acb5;
-
     font-size: 13px;
-
 }
 
-
 .department-folder:hover .folder-arrow {
-
     color: #1675ad;
-
 }
 
 
@@ -571,114 +388,70 @@ body {
 ========================================= */
 
 .footer {
-
     min-height: 70px;
-
     background: #277cad;
-
     border-top: 7px solid #5bb0e0;
-
     color: white;
-
     text-align: center;
-
     padding: 12px;
-
     font-family: monospace;
-
     font-size: 13px;
-
     line-height: 22px;
-
     flex-shrink: 0;
-
 }
 
 
 /* =========================================
-   RESPONSIVE
+   RESPONSIVE DESIGN
 ========================================= */
 
 @media(max-width: 1200px) {
-
     .content-header {
-
         flex-direction: column;
-
     }
-
 }
-
 
 @media(max-width: 900px) {
-
     .sidebar {
-
         width: 220px;
-
-    }
-
-    .content {
-
-        padding-left: 20px;
-
+        flex: 0 0 220px;
     }
 
     .department-grid {
-
-        grid-template-columns:
-                        repeat(2, 1fr);
-
+        grid-template-columns: repeat(2, 1fr);
     }
-
 }
 
-
 @media(max-width: 700px) {
-
     .main-area {
-
         padding: 15px;
-
         flex-direction: column;
-
+        gap: 0;
     }
 
     .sidebar {
-
         width: 100%;
-
+        flex: auto;
+        margin: 0 0 20px 0 !important;
     }
 
     .content {
-
-        padding: 20px 0 0;
-
+        padding: 0;
     }
 
     .department-grid {
-
         grid-template-columns: 1fr;
-
     }
 
     .header-right {
-
         display: none;
-
     }
 
     .header-title {
-
         left: 90px;
-
     }
 
     .header-title h1 {
-
         font-size: 18px;
-
     }
-
 }
-

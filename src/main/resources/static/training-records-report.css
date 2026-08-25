@@ -1,0 +1,277 @@
+/* =========================================================
+   RESET & BASE STYLING
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Main Content Area Alignment */
+.main-area .content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* =========================================================
+   SIDEBAR & CONDITIONAL ACTIVE HIGHLIGHT
+========================================================= */
+
+.sidebar {
+    width: 260px;
+    flex: 0 0 260px;
+    margin: 20px 0 20px 30px;
+    background: #ffffff;
+    border: 1px solid #d9e2e7;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    align-self: flex-start;
+}
+
+/* Base Link Item Style */
+.sidebar-item {
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 16px;
+    color: #14577f;
+    background: #f5f7f8;
+    border-bottom: 1px solid #e1e6e9;
+    border-left: 4px solid transparent;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.sidebar-item:hover {
+    color: #0b527d;
+    background: #eaf5fa;
+    text-decoration: none;
+}
+
+/* ১. প্রথম মেনু (CAAB Inspector Training Records) - ALWAYS BLUE */
+.sidebar-item:first-child {
+    background: #176fa3 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-left: 4px solid #0f4c71 !important;
+}
+
+.sidebar-item:first-child:hover {
+    background: #145f8c !important;
+    color: #ffffff !important;
+}
+
+/* ২. যে পেজে ইউজার আছেন (ACTIVE STATE) - LIGHT BLUE */
+.sidebar-item:not(:first-child).active {
+    background: #eaf5fa !important;
+    color: #176fa3 !important;
+    border-left: 4px solid #176fa3 !important;
+    font-weight: 700;
+    padding-left: 14px;
+    box-shadow: inset 2px 0 5px rgba(23, 111, 163, 0.08);
+}
+
+/* =========================================================
+   VERTICAL FORM LAYOUT & ALIGNMENT STYLES
+========================================================= */
+
+.panel.p-4 {
+    background: #ffffff;
+    border: 1px solid #d8e3e9;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(30,70,90,.06);
+}
+
+.search-vertical-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.vertical-form-group {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 160px minmax(300px, 620px);
+    align-items: center;
+    column-gap: 20px;
+}
+
+.vertical-form-label {
+    margin: 0;
+    color: #334b5b;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: right;
+}
+
+.vertical-input-wrapper {
+    width: 100%;
+    max-width: 620px;
+}
+
+/* Gradient Input & Select Box Styling */
+.vertical-input-wrapper .form-control,
+.vertical-input-wrapper .form-select {
+    width: 100%;
+    height: 40px;
+    padding: 7px 12px;
+    border: 1px solid #c8c8c8;
+    border-radius: 7px;
+    outline: none;
+    color: #333;
+    background: linear-gradient(
+            to bottom,
+            #ffffff 0%,
+            #fafafa 45%,
+            #eeeeee 100%
+    );
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    font-size: 14px;
+    transition: all .15s ease;
+}
+
+.vertical-input-wrapper .form-control:focus,
+.vertical-input-wrapper .form-select:focus {
+    border-color: #7ea7bd;
+    background: #ffffff;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.07), 0 0 4px rgba(40,110,150,.20);
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #176fa3;
+    border-color: #145f8c;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px 18px;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #125780;
+    border-color: #0e486b;
+}
+
+/* =========================================================
+   SUMMARY CARDS & TABLES
+========================================================= */
+
+.bg-success-subtle {
+    background-color: #e6f4ea !important;
+}
+
+.bg-warning-subtle {
+    background-color: #fef7e0 !important;
+}
+
+.badge {
+    letter-spacing: 0.3px;
+    font-size: 10px !important;
+    padding: 5px 10px !important;
+    border-radius: 12px !important;
+}
+
+/* Table Header Custom Blue Accent */
+.table-primary {
+    --bs-table-bg: #176fa3 !important;
+    --bs-table-color: #ffffff !important;
+}
+
+.table-primary th {
+    background-color: #176fa3 !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+/* =========================================================
+   RESPONSIVE LAYOUT
+========================================================= */
+
+@media (max-width: 700px) {
+    .sidebar {
+        display: none;
+    }
+    .vertical-form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+    .vertical-form-label {
+        text-align: left;
+    }
+    .vertical-input-wrapper {
+        max-width: 100%;
+    }
+}
+
+/* =========================================================
+   PRINT MEDIA STYLES (A4 LANDSCAPE PAGE)
+========================================================= */
+
+@media print {
+    .no-print,
+    .top-header,
+    .main-navbar,
+    .sidebar,
+    .footer,
+    .content-header,
+    .panel.p-4.mb-4 {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .main-area {
+        display: block !important;
+    }
+
+    .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    .table {
+        width: 100% !important;
+        font-size: 9px !important;
+        border-collapse: collapse !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 4px 6px !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .table-primary th {
+        background-color: #176fa3 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .badge {
+        border: 1px solid #999 !important;
+        color: #000 !important;
+        background: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

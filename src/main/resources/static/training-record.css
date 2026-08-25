@@ -204,81 +204,67 @@ a {
     min-height: calc(100vh - 200px);
 }
 
-
 /* =========================================================
-   SIDEBAR
+   SIDEBAR & CONDITIONAL ACTIVE HIGHLIGHT
 ========================================================= */
 
 .sidebar {
     width: 260px;
     flex: 0 0 260px;
-
     margin: 20px 0 20px 30px;
-
-    background: #fff;
-
+    background: #ffffff;
     border: 1px solid #d9e2e7;
     border-radius: 5px;
-
     overflow: hidden;
-
     box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    align-self: flex-start;
 }
 
-.sidebar-title {
-    padding: 14px 17px;
-
-    background: #176fa3;
-
-    color: #fff;
-
-    font-size: 15px;
-    font-weight: 700;
-
-    line-height: 1.5;
-}
-
+/* Base Link Item Style */
 .sidebar-item {
     min-height: 45px;
-
     display: flex;
     align-items: center;
-
     gap: 9px;
-
     padding: 11px 16px;
-
     color: #14577f;
     background: #f5f7f8;
-
     border-bottom: 1px solid #e1e6e9;
-
+    border-left: 4px solid transparent;
     font-size: 13px;
     font-weight: 600;
-
-    transition: .2s ease;
-}
-
-.sidebar-item i {
-    width: 18px;
-    text-align: center;
+    text-decoration: none;
+    transition: all .2s ease;
 }
 
 .sidebar-item:hover {
     color: #0b527d;
     background: #eaf5fa;
+    text-decoration: none;
 }
 
-.sidebar-item.active {
-    color: #176fa3;
-    background: #fff;
-
-    border-left: 4px solid #176fa3;
-
-    padding-left: 12px;
+/* 1. প্রথম মেনু (CAAB Inspector Training Records) - ALWAYS BLUE */
+.sidebar-item:first-child {
+    background: #176fa3 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-left: 4px solid #0f4c71 !important;
 }
 
+.sidebar-item:first-child:hover {
+    background: #145f8c !important;
+    color: #ffffff !important;
+}
 
+/* 2. বাকি ৩টি মেনুর মধ্যে যেটি ACTIVE (খোলা) থাকবে - LIGHT BLUE */
+.sidebar-item:not(:first-child).active {
+    background: #eaf5fa !important;       /* Light Blue Background */
+    color: #176fa3 !important;            /* Blue Text */
+    border-left: 4px solid #176fa3 !important; /* Left Active Border Line */
+    font-weight: 700;
+    padding-left: 14px;
+    box-shadow: inset 2px 0 5px rgba(23, 111, 163, 0.08);
+}
 /* =========================================================
    CONTENT
 ========================================================= */
@@ -399,6 +385,43 @@ a {
     gap: 8px;
 
     flex-shrink: 0;
+}
+
+
+/* =========================================================
+   TRAINING TYPE RADIO FILTER
+========================================================= */
+
+.training-filter-radio-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 13px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.training-filter-radio-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #334b5b;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.training-filter-radio-group label:hover {
+    color: #147eb4;
+}
+
+.training-filter-radio-group input[type="radio"] {
+    accent-color: #147eb4;
+    cursor: pointer;
 }
 
 
@@ -594,7 +617,7 @@ a {
 
 .training-table {
     width: 100%;
-    min-width: 1280px;
+    min-width: 1350px;
 
     border-collapse: collapse;
     border-spacing: 0;
@@ -602,6 +625,8 @@ a {
     background: #fff;
 
     font-size: 12px;
+
+    table-layout: auto;
 }
 
 
@@ -666,7 +691,7 @@ a {
 
 
 /* =========================================================
-   COLUMN
+   COLUMN SPECIFIC ADJUSTMENTS
 ========================================================= */
 
 .col-sl {
@@ -683,6 +708,22 @@ a {
     text-align: center !important;
 }
 
+.col-course,
+.course-cell {
+    max-width: 220px !important;
+    white-space: normal !important;
+    word-break: break-word;
+    line-height: 1.45;
+}
+
+.remarks-cell {
+    max-width: 200px !important;
+    white-space: normal !important;
+    word-break: break-word;
+    font-size: 12px;
+    color: #475569;
+}
+
 
 /* =========================================================
    EMPLOYEE
@@ -696,20 +737,6 @@ a {
 .employee-name {
     color: #333;
     font-weight: 600;
-}
-
-
-/* =========================================================
-   COURSE
-========================================================= */
-
-.course-cell {
-    min-width: 220px;
-    max-width: 300px;
-
-    white-space: normal !important;
-
-    line-height: 1.45;
 }
 
 
@@ -731,31 +758,36 @@ a {
     font-weight: 700;
 
     white-space: nowrap;
+    text-transform: uppercase;
 }
 
 .training-type.initial {
     background: #dceefa;
     color: #17618f;
+    text-transform: uppercase;
 }
 
 .training-type.recurrent {
     background: #e8e0f8;
     color: #6243a0;
+    text-transform: uppercase;
 }
 
 .training-type.specialized {
     background: #dff2e7;
     color: #28734b;
+    text-transform: uppercase;
 }
 
 .training-type.previous {
     background: #fff0d6;
     color: #996317;
+    text-transform: uppercase;
 }
 
 
 /* =========================================================
-   CERTIFICATE DATE
+   CERTIFICATE DATE & MUTED TEXT
 ========================================================= */
 
 .certificate-date {
@@ -807,7 +839,7 @@ a {
 
 
 /* =========================================================
-   BUTTON
+   BUTTONS
 ========================================================= */
 
 .btn {
@@ -878,7 +910,7 @@ a {
 
 
 /* =========================================================
-   NO CERTIFICATE
+   NO CERTIFICATE & EMPTY STATES
 ========================================================= */
 
 .no-certificate {
@@ -893,11 +925,6 @@ a {
 
     white-space: nowrap;
 }
-
-
-/* =========================================================
-   NO SEARCH RESULT
-========================================================= */
 
 .no-search-result {
     display: none;
@@ -921,11 +948,6 @@ a {
     margin-right: 6px;
     color: #1680b8;
 }
-
-
-/* =========================================================
-   EMPTY STATE
-========================================================= */
 
 .empty {
     padding: 55px 20px !important;
@@ -987,7 +1009,7 @@ a {
 
 
 /* =========================================================
-   TABLET
+   RESPONSIVE LAYOUTS
 ========================================================= */
 
 @media (max-width: 1100px) {
@@ -1014,14 +1036,9 @@ a {
     }
 
     .training-table {
-        min-width: 1250px;
+        min-width: 1300px;
     }
 }
-
-
-/* =========================================================
-   SMALL TABLET
-========================================================= */
 
 @media (max-width: 850px) {
 
@@ -1046,11 +1063,6 @@ a {
         width: 260px;
     }
 }
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
 
 @media (max-width: 700px) {
 
@@ -1148,14 +1160,9 @@ a {
     }
 
     .training-table {
-        min-width: 1250px;
+        min-width: 1300px;
     }
 }
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
 
 @media (max-width: 450px) {
 
@@ -1201,7 +1208,7 @@ a {
 
 
 /* =========================================================
-   PRINT
+   PRINT STYLES
 ========================================================= */
 
 @media print {
@@ -1222,7 +1229,8 @@ a {
     .header-actions,
     .record-summary,
     .no-print,
-    .no-search-result {
+    .no-search-result,
+    .training-filter-radio-group {
         display: none !important;
     }
 

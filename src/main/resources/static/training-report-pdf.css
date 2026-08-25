@@ -1,0 +1,204 @@
+/* =====================================================
+   RESET & A4 PAGE CONFIGURATION
+===================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@page {
+    size: A4 landscape;
+    margin: 12mm 15mm;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #1e293b;
+    background-color: #f8fafc;
+    line-height: 1.4;
+    padding: 20px;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+/* =====================================================
+   MAIN CONTAINER (PDF CARD LOOK)
+===================================================== */
+.pdf-container {
+    max-width: 1050px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px 35px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* =====================================================
+   TOP ACTION BUTTONS
+===================================================== */
+.action-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.btn-print {
+    background-color: #176fa3;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-print:hover {
+    background-color: #123f63;
+}
+
+/* =====================================================
+   HEADER & CAAB LOGO
+===================================================== */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #176fa3;
+}
+
+.caab-logo {
+    width: 65px;
+    height: auto;
+    margin-bottom: 6px;
+    object-fit: contain;
+}
+
+.header h1 {
+    font-size: 18px;
+    color: #123f63;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.header h2 {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 600;
+}
+
+/* =====================================================
+   INSPECTOR INFO SUMMARY BAR
+===================================================== */
+.emp-info-bar {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #176fa3;
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.emp-info-bar div span {
+    font-weight: bold;
+    color: #176fa3;
+}
+
+/* =====================================================
+   DATA TABLE DESIGN FOR A4 FIT
+===================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: 5px;
+}
+
+th, td {
+    border: 1px solid #94a3b8;
+    padding: 8px 6px;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 10.5px;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #176fa3 !important;
+    color: #ffffff !important;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* =====================================================
+   PRINT SPECIFIC RULES (CLEAN A4 OUTPUT)
+===================================================== */
+@media print {
+    body {
+        background: #ffffff;
+        padding: 0;
+    }
+
+    .pdf-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .header {
+        border-bottom: 2px solid #176fa3 !important;
+    }
+
+    .emp-info-bar {
+        background-color: #f1f5f9 !important;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 4px solid #176fa3 !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    th {
+        background-color: #176fa3 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+}

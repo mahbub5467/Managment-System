@@ -1,1098 +1,315 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PEL Training Records</title>
 
-
     <!-- Font Awesome -->
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- Training CSS -->
-    <link
-            rel="stylesheet"
-            href="${pageContext.request.contextPath}/training-pel.css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/training-pel.css">
 </head>
-
 
 <body>
 
-
 <div class="page-wrapper">
 
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
+    <!-- HEADER -->
     <header class="top-header">
-
         <div class="header-left">
-
-            <!-- If you have CAAB logo, keep this -->
-            <img
-                    src="${pageContext.request.contextPath}/resources/images/caab-logo.jpg"
-                    alt="CAAB Logo"
-                    class="caab-logo">
-
-
+            <img src="${pageContext.request.contextPath}/resources/images/caab-logo.jpg" alt="CAAB Logo" class="caab-logo">
             <div class="header-title">
-
-                <h1>
-                    Civil Aviation Authority of Bangladesh
-                </h1>
-
-                <h2>
-                    Personnel Licensing Department
-                </h2>
-
+                <h1>Civil Aviation Authority of Bangladesh</h1>
+                <h2>FSR</h2>
             </div>
-
         </div>
-
 
         <div class="header-right">
-
-            <div>
-                Personnel Licensing System
-            </div>
-
-            <div>
-                Training Records Management
-            </div>
-
+            Logged on | Day Opened on: <span id="dayOpenedDate"></span> | Server Date: <span id="serverDate"></span>
+            <br>
+            Meteorological Data | Sunrise: | Sunset:
         </div>
-
     </header>
 
-
-
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
-
+    <!-- NAVBAR -->
     <nav class="main-navbar">
-
-        <a
-                href="${pageContext.request.contextPath}/"
-                class="home-link">
-
-            <i class="fa-solid fa-house"></i>
-
-            Home
-
+        <a href="${pageContext.request.contextPath}/" class="home-link">
+            <i class="fa-solid fa-house"></i> Home
         </a>
 
-
         <div class="nav-right">
-
             <div class="nav-circle">
-
                 <i class="fa-solid fa-bell"></i>
-
             </div>
-
-
             <div class="nav-circle">
-
                 <i class="fa-solid fa-user"></i>
-
             </div>
-
-
-            <button
-                    type="button"
-                    class="logout">
-
-                <i class="fa-solid fa-right-from-bracket"></i>
-
-                Logout
-
+            <button type="button" class="logout" onclick="window.location.href='${pageContext.request.contextPath}/logout';">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
             </button>
-
         </div>
-
     </nav>
 
-
-
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
+    <!-- MAIN AREA -->
     <main class="main-area">
-
-
-        <!-- =================================================
-             SIDEBAR
-        ================================================== -->
-
-        <aside class="sidebar">
-
-            <div class="sidebar-title">
-
-                <i class="fa-solid fa-bars"></i>
-
-                Personnel Licensing
-
-            </div>
-
-
-
-
-
-            <a
-                    href="#"
-                    class="sidebar-item active">
-
-                <i class="fa-solid fa-layer-group"></i>
-
-                Training Records
-
+        <!-- SIDEBAR -->
+        <aside class="sidebar no-print">
+            <!-- ১. Always Blue Header Link -->
+            <a href="${pageContext.request.contextPath}/training" class="sidebar-item">
+                CAAB Inspector Training Records
             </a>
 
+            <!-- ২. Supervisor Assessment -->
+            <a href="${pageContext.request.contextPath}/training/supervisor-assessment" class="sidebar-item">
+                Supervisor Assessment
+            </a>
 
+            <!-- ৩. Active Link (Training Records) -->
+            <a href="${pageContext.request.contextPath}/training/training-record" class="sidebar-item">
+                Training Records
+            </a>
 
-
+            <!-- ৪. Training Records Report -->
+            <a href="${pageContext.request.contextPath}/training/training-records-report" class="sidebar-item">
+                Training Records Report
+            </a>
         </aside>
 
-
-
-        <!-- =================================================
-             CONTENT
-        ================================================== -->
-
+        <!-- CONTENT -->
         <section class="content">
 
-
             <!-- Breadcrumb -->
-
             <div class="breadcrumb">
-
-                <a href="${pageContext.request.contextPath}/">
-                    Home
-                </a>
-
+                <a href="${pageContext.request.contextPath}/">Home</a>
                 <i class="fa-solid fa-chevron-right"></i>
-
-                <span>
-                    Training Records
-                </span>
-
+                <span>Training Records</span>
             </div>
 
-
-
-            <!-- Page title -->
-
+            <!-- Page Title -->
             <div class="page-title-row">
-
                 <div>
-
-                    <h1 class="page-title">
-                        PEL Training Records
-                    </h1>
-
+                    <h1 class="page-title">PEL Training Records</h1>
                     <div class="page-description">
-                        Create and maintain Personnel Licensing inspector
-                        training records.
+                        Create and maintain Personnel Licensing inspector training records.
                     </div>
-
                 </div>
 
-
-                <a
-                        href="javascript:history.back()"
-                        class="back-btn">
-
-                    <i class="fa-solid fa-arrow-left"></i>
-
-                    Back
-
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
-
             </div>
 
+            <!-- FORM START -->
+            <form id="trainingForm" method="post" action="${pageContext.request.contextPath}/training/pel/save" enctype="multipart/form-data" novalidate>
 
-
-            <!-- =================================================
-                 FORM
-            ================================================== -->
-
-            <form
-                    id="trainingForm"
-                    method="post"
-                    action="${pageContext.request.contextPath}/training/pel/save"
-                    enctype="multipart/form-data"
-                    novalidate>
-
-
-
-                <!-- =================================================
-                     EMPLOYEE INFORMATION
-                ================================================== -->
-
+                <!-- EMPLOYEE INFORMATION CARD -->
                 <div class="card employee-card">
-
-
                     <div class="card-header">
-
-                        <i class="fa-solid fa-user"></i>
-
-                        Employee Information
-
+                        <i class="fa-solid fa-user"></i> Employee Information
                     </div>
 
-
                     <div class="card-body">
-
                         <div class="form-grid">
-
 
                             <!-- Employee ID -->
-
                             <div class="form-group">
-
-                                <label
-                                        for="employeeId"
-                                        class="form-label">
-
-                                    Employee ID
-
-                                    <span class="required">
-                                        *
-                                    </span>
-
+                                <label for="employeeId" class="form-label">
+                                    EIIN <span class="required">*</span>
                                 </label>
-
-
-                                <div
-                                        class="employee-search-wrapper">
-
-                                    <input
-                                            type="text"
-                                            id="employeeId"
-                                            name="employeeId"
-                                            class="form-control"
-                                            placeholder="Enter Employee ID"
-                                            autocomplete="off"
-                                            required>
-
-
-                                    <button
-                                            type="button"
-                                            id="employeeSearchBtn"
-                                            class="employee-search-btn"
-                                            title="Search Employee">
-
+                                <div class="employee-search-wrapper">
+                                    <input type="text" id="employeeId" name="employeeId" class="form-control" autocomplete="off" required>
+                                    <button type="button" id="employeeSearchBtn" class="employee-search-btn" title="Search Employee">
                                         <i class="fa-solid fa-magnifying-glass"></i>
-
                                     </button>
-
                                 </div>
-
-
-<%--                                <div--%>
-<%--                                        id="employeeSearchStatus"--%>
-<%--                                        class="employee-search-status">--%>
-<%--                                </div>--%>
-
+                                <div id="employeeSearchStatus" class="employee-search-status"></div>
                             </div>
 
-
-
-                            <!-- Name -->
-
+                            <!-- Name (Editable & Auto-Fillable) -->
                             <div class="form-group">
-
-                                <label
-                                        for="employeeName"
-                                        class="form-label">
-
-                                    Name
-
-                                    <span class="required">
-                                        *
-                                    </span>
-
+                                <label for="employeeName" class="form-label">
+                                    Name <span class="required">*</span>
                                 </label>
-
-
-                                <input
-                                        type="text"
-                                        id="employeeName"
-                                        name="employeeName"
-                                        class="form-control employee-auto-field"
-                                        placeholder="Employee Name"
-                                        readonly
-                                        required>
-
+                                <input type="text" id="employeeName" name="employeeName" class="form-control" required>
                             </div>
 
-
-
-                            <!-- Designation -->
-
+                            <!-- Designation (Editable & Auto-Fillable) -->
                             <div class="form-group">
-
-                                <label
-                                        for="designation"
-                                        class="form-label">
-
-                                    Designation
-
-                                    <span class="required">
-                                        *
-                                    </span>
-
+                                <label for="designation" class="form-label">
+                                    Designation <span class="required">*</span>
                                 </label>
-
-
-                                <input
-                                        type="text"
-                                        id="designation"
-                                        name="designation"
-                                        class="form-control employee-auto-field"
-                                        placeholder="Designation"
-                                        readonly
-                                        required>
-
+                                <input type="text" id="designation" name="designation" class="form-control" required>
                             </div>
 
-
-
-                            <!-- Joining Date -->
-
+                            <!-- Joining Date (Editable & Auto-Fillable) -->
                             <div class="form-group">
-
-                                <label
-                                        for="joiningDate"
-                                        class="form-label">
-
-                                    Joining Date
-
-                                    <span class="required">
-                                        *
-                                    </span>
-
+                                <label for="joiningDate" class="form-label">
+                                    Joining Date <span class="required">*</span>
                                 </label>
-
-
-                                <input
-                                        type="date"
-                                        id="joiningDate"
-                                        name="joiningDate"
-                                        class="form-control employee-auto-field"
-                                        readonly
-                                        required>
-
+                                <input type="date" id="joiningDate" name="joiningDate" class="form-control" required>
                             </div>
-
 
                         </div>
-
                     </div>
-
                 </div>
 
-
-
-                <!-- =================================================
-                     DEPARTMENT
-                ================================================== -->
-
-<%--                <div class="card department-card">--%>
-
-<%--                    <div class="department-body">--%>
-
-<%--                        <span class="department-label">--%>
-<%--                            Department :--%>
-<%--                        </span>--%>
-
-<%--                        <span--%>
-<%--                                id="departmentName"--%>
-<%--                                class="department-name">--%>
-
-<%--                            PEL--%>
-
-<%--                        </span>--%>
-
-<%--                    </div>--%>
-
-<%--                </div>--%>
-
-
-
-                <!-- =================================================
-                     TRAINING INFORMATION
-                ================================================== -->
-
+                <!-- TRAINING INFORMATION CARD -->
                 <div class="card training-card">
-
-
                     <div class="card-header">
-
-                        <i class="fa-solid fa-layer-group"></i>
-
-                        Training Information
-
+                        <i class="fa-solid fa-layer-group"></i> Training Information
                     </div>
-
 
                     <div class="card-body">
-
-
                         <div class="record-description">
-
-                            Select the type of training record you want
-                            to enter.
-
+                            Select the type of training record you want to enter.
                         </div>
 
-
-
-                        <!-- =================================================
-                             TRAINING TYPE
-                        ================================================== -->
-
+                        <!-- Department & Training Type Selection -->
                         <div class="form-grid">
-
                             <div class="form-group">
-
-                                <label
-                                        for="employeeName"
-                                        class="form-label">
-
-                                  Department
-
-                                    <span class="required">
-                                        *
-                                    </span>
-
+                                <label for="depName" class="form-label">
+                                    Division <span class="required">*</span>
                                 </label>
-
-
-                                <input
-                                        type="text"
-                                        id="depName"
-                                        name="depName"
-                                        class="form-control employee-auto-field"
-                                        value="PEL"
-                                        readonly
-                                        >
-
+                                <input type="text" id="depName" name="depName" class="form-control employee-auto-field" value="PEL" readonly>
                             </div>
 
-
                             <div class="form-group">
-
-                                <label
-                                        for="trainingType"
-                                        class="form-label">
-
-                                    Select Training Type
-
-                                    <span class="required">
-                                        *
-                                    </span>
-
+                                <label for="trainingType" class="form-label">
+                                    Select Training Type <span class="required">*</span>
                                 </label>
-
-
-                                <select
-                                        id="trainingType"
-                                        name="trainingType"
-                                        class="form-select"
-                                        required>
-
-                                    <option value="">
-                                        -- Select Training Type --
-                                    </option>
-
-                                    <option value="initial">
-                                        Initial Training, OJT &amp; Certification
-                                    </option>
-
-                                    <option value="recurrent">
-                                        Recurrent Training
-                                    </option>
-
-                                    <option value="specialized">
-                                        Specialized Training
-                                    </option>
-
-                                    <option value="previous">
-                                        Previous Training
-                                    </option>
-
+                                <select id="trainingType" name="trainingType" class="form-select" required>
+                                    <option value="">-- Select Training Type --</option>
+                                    <option value="initial">Initial Training</option>
+                                    <option value="ojt">OJT</option>
+                                    <option value="recurrent">Recurrent Training</option>
+                                    <option value="specialized">Specialized Training</option>
+                                    <option value="previous">Previous Training</option>
                                 </select>
-
                             </div>
-
                         </div>
 
+                        <!-- UNIFIED TRAINING ENTRY BLOCK -->
+                        <div id="trainingEntryArea" class="training-entry-area training-details-block hidden">
 
+                            <div class="training-entry-title">
+                                <h3 id="dynamicSectionTitle">Training Details</h3>
+                                <p id="dynamicSectionDesc">Enter training, provider, dates, and certification information.</p>
+                            </div>
 
-                        <!-- =================================================
-                             TRAINING ENTRY AREA
-                             Hidden until Training Type selected
-                        ================================================== -->
+                            <div class="training-form-grid">
 
-                        <div
-                                id="trainingEntryArea"
-                                class="training-entry-area hidden">
-
-
-
-                            <!-- =================================================
-                                 INITIAL TRAINING
-                            ================================================== -->
-
-                            <div
-                                    id="initialSection"
-                                    class="training-section hidden">
-
-
-                                <div class="training-entry-title">
-
-                                    <h3>
-                                        Initial Training, OJT &amp; Certification
-                                    </h3>
-
-                                    <p>
-                                        Enter initial training, OJT and
-                                        certification information.
-                                    </p>
-
+                                <!-- Course Title -->
+                                <div class="training-form-group">
+                                    <label for="courseTitle" class="training-form-label">
+                                        Course Title <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="courseTitle" name="courseTitle" class="form-control" placeholder="Enter training title" required>
                                 </div>
 
+                                <!-- Training Provider -->
+                                <div class="training-form-group">
+                                    <label for="trainingProvider" class="training-form-label">
+                                        Training Provider <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="trainingProvider" name="trainingProvider" class="form-control" placeholder="Enter training provider" required>
+                                </div>
 
-                                <div class="training-form-grid">
+                                <!-- Start Date -->
+                                <div class="training-form-group">
+                                    <label for="startDate" class="training-form-label">
+                                        Start Training Date <span class="required">*</span>
+                                    </label>
+                                    <input type="date" id="startDate" name="startDate" class="form-control" required>
+                                </div>
 
+                                <!-- End Date -->
+                                <div class="training-form-group">
+                                    <label for="endDate" class="training-form-label">
+                                        End Date
+                                    </label>
+                                    <input type="date" id="endDate" name="endDate" class="form-control">
+                                </div>
 
-                                    <!-- Course -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="initialCourse"
-                                                class="training-form-label">
-
-                                            Course / Training Title
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
+                                <!-- Certification Radio Buttons (Defaults to 'No') -->
+                                <div class="training-form-group">
+                                    <label class="training-form-label">
+                                        Certification <span class="required">*</span>
+                                    </label>
+                                    <div class="certification-options">
+                                        <label class="certification-option">
+                                            <input type="radio" name="certification" value="yes" required>
+                                            Yes
                                         </label>
-
-
-                                        <input
-                                                type="text"
-                                                id="initialCourse"
-                                                name="initialCourse"
-                                                class="form-control"
-                                                placeholder="Enter training title"
-                                                required>
-
-                                    </div>
-
-
-
-                                    <!-- Initial Training Date -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="initialTrainingDate"
-                                                class="training-form-label">
-
-                                            Initial Training Date
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
+                                        <label class="certification-option">
+                                            <input type="radio" name="certification" value="no" checked>
+                                            No
                                         </label>
-
-
-                                        <input
-                                                type="date"
-                                                id="initialTrainingDate"
-                                                name="initialTrainingDate"
-                                                class="form-control"
-                                                required>
-
                                     </div>
+                                </div>
 
+                                <!-- Certificate Date (Hidden by Default) -->
+                                <div id="certificateDateGroup" class="training-form-group certificate-dependent hidden">
+                                    <label for="certificateDate" class="training-form-label">
+                                        Certificate Date
+                                    </label>
+                                    <input type="date" id="certificateDate" name="certificateDate" class="form-control" disabled>
+                                </div>
 
-
-                                    <!-- OJT Date -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="ojtDate"
-                                                class="training-form-label">
-
-                                            OJT Date
-
-                                        </label>
-
-
-                                        <input
-                                                type="date"
-                                                id="ojtDate"
-                                                name="ojtDate"
-                                                class="form-control">
-
+                                <!-- Certificate File (Hidden by Default) -->
+                                <div id="certificateFileGroup" class="training-form-group certificate-dependent hidden">
+                                    <label for="certificateFile" class="training-form-label">
+                                        Certificate File
+                                    </label>
+                                    <div style="width: 100%; max-width: 620px;">
+                                        <input type="file" id="certificateFile" name="certificateFile" class="form-control certificate-upload" accept=".pdf,.jpg,.jpeg,.png" disabled>
+                                        <span id="fileSelectedText" style="font-size: 12px; color: #64748b; margin-top: 5px; display: block;">
+                                            Please select file
+                                        </span>
                                     </div>
-
-
-
-                                    <!-- Certification -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                class="training-form-label">
-
-                                            Certification
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
-                                        </label>
-
-
-                                        <div
-                                                class="certification-options">
-
-                                            <label
-                                                    class="certification-option">
-
-                                                <input
-                                                        type="radio"
-                                                        name="initialCertification"
-                                                        value="yes"
-                                                        required>
-
-                                                Yes
-
-                                            </label>
-
-
-                                            <label
-                                                    class="certification-option">
-
-                                                <input
-                                                        type="radio"
-                                                        name="initialCertification"
-                                                        value="no">
-
-                                                No
-
-                                            </label>
-
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <!-- Certificate Date -->
-
-                                    <div
-                                            id="initialCertificateDateGroup"
-                                            class="training-form-group certificate-dependent hidden">
-
-                                        <label
-                                                for="initialCertificateDate"
-                                                class="training-form-label">
-
-                                            Certificate Date
-
-                                        </label>
-
-
-                                        <input
-                                                type="date"
-                                                id="initialCertificateDate"
-                                                name="initialCertificateDate"
-                                                class="form-control"
-                                                disabled>
-
-                                    </div>
-
-
-
-                                    <!-- Certificate File -->
-
-                                    <div
-                                            id="initialCertificateFileGroup"
-                                            class="training-form-group certificate-dependent hidden">
-
-                                        <label
-                                                for="initialCertificate"
-                                                class="training-form-label">
-
-                                            Certificate File
-
-                                        </label>
-
-
-                                        <input
-                                                type="file"
-                                                id="initialCertificate"
-                                                name="initialCertificate"
-                                                class="form-control certificate-upload"
-                                                accept=".pdf,.jpg,.jpeg,.png"
-                                                disabled>
-
-                                    </div>
-
-
                                 </div>
 
                             </div>
 
-
-
-                            <!-- =================================================
-                                 OTHER TRAINING
-                            ================================================== -->
-
-                            <div
-                                    id="otherSection"
-                                    class="training-section hidden">
-
-
-                                <div class="training-entry-title">
-
-                                    <h3 id="otherTrainingTitle">
-                                        Training Information
-                                    </h3>
-
-                                    <p id="otherTrainingDescription">
-                                        Enter training information.
-                                    </p>
-
-                                </div>
-
-
-                                <div class="training-form-grid">
-
-
-                                    <!-- Training Title -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="trainingDescription"
-                                                class="training-form-label">
-
-                                            <span id="otherTypeHeader">
-                                                Type of Training
-                                            </span>
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
-                                        </label>
-
-
-                                        <input
-                                                type="text"
-                                                id="trainingDescription"
-                                                name="trainingDescription"
-                                                class="form-control"
-                                                placeholder="Enter training type">
-
-                                    </div>
-
-
-
-                                    <!-- Course -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="otherCourse"
-                                                class="training-form-label">
-
-                                            Course / Training Title
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
-                                        </label>
-
-
-                                        <input
-                                                type="text"
-                                                id="otherCourse"
-                                                name="otherCourse"
-                                                class="form-control"
-                                                placeholder="Enter training title">
-
-                                    </div>
-
-
-
-                                    <!-- Provider -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="trainingProvider"
-                                                class="training-form-label">
-
-                                            Training Provider
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
-                                        </label>
-
-
-                                        <input
-                                                type="text"
-                                                id="trainingProvider"
-                                                name="trainingProvider"
-                                                class="form-control"
-                                                placeholder="Enter training provider">
-
-                                    </div>
-
-
-
-                                    <!-- Training Date -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                for="trainingDate"
-                                                class="training-form-label">
-
-                                            Training Date
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
-                                        </label>
-
-
-                                        <input
-                                                type="date"
-                                                id="trainingDate"
-                                                name="trainingDate"
-                                                class="form-control">
-
-                                    </div>
-
-
-
-                                    <!-- Certification -->
-
-                                    <div class="training-form-group">
-
-                                        <label
-                                                class="training-form-label">
-
-                                            Certification
-
-                                            <span class="required">
-                                                *
-                                            </span>
-
-                                        </label>
-
-
-                                        <div
-                                                class="certification-options">
-
-                                            <label
-                                                    class="certification-option">
-
-                                                <input
-                                                        type="radio"
-                                                        name="otherCertification"
-                                                        value="yes">
-
-                                                Yes
-
-                                            </label>
-
-
-                                            <label
-                                                    class="certification-option">
-
-                                                <input
-                                                        type="radio"
-                                                        name="otherCertification"
-                                                        value="no">
-
-                                                No
-
-                                            </label>
-
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <!-- Certificate Date -->
-
-                                    <div
-                                            id="otherCertificateDateGroup"
-                                            class="training-form-group certificate-dependent hidden">
-
-                                        <label
-                                                for="otherCertificateDate"
-                                                class="training-form-label">
-
-                                            Certificate Date
-
-                                        </label>
-
-
-                                        <input
-                                                type="date"
-                                                id="otherCertificateDate"
-                                                name="otherCertificateDate"
-                                                class="form-control"
-                                                disabled>
-
-                                    </div>
-
-
-
-                                    <!-- Certificate File -->
-
-                                    <div
-                                            id="otherCertificateFileGroup"
-                                            class="training-form-group certificate-dependent hidden">
-
-                                        <label
-                                                for="otherCertificate"
-                                                class="training-form-label">
-
-                                            Certificate File
-
-                                        </label>
-
-
-                                        <input
-                                                type="file"
-                                                id="otherCertificate"
-                                                name="otherCertificate"
-                                                class="form-control certificate-upload"
-                                                accept=".pdf,.jpg,.jpeg,.png"
-                                                disabled>
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-
-
-                            <!-- =================================================
-                                 BUTTONS
-                                 Hidden initially
-                            ================================================== -->
-
-                            <div
-                                    id="trainingActions"
-                                    class="bottom-actions hidden">
-
-
-                                <button
-                                        type="button"
-                                        class="btn btn-cancel"
-                                        onclick="history.back();">
-
-                                    <i class="fa-solid fa-arrow-left"></i>
-
-                                    Cancel
-
+                            <!-- ACTION BUTTONS -->
+                            <div id="trainingActions" class="bottom-actions">
+                                <button type="button" class="btn btn-cancel" onclick="history.back();">
+                                    <i class="fa-solid fa-arrow-left"></i> Cancel
                                 </button>
 
-
-                                <button
-                                        type="submit"
-                                        class="btn btn-save">
-
-                                    <i class="fa-solid fa-floppy-disk"></i>
-
-                                    Submit Training Record
-
+                                <button type="submit" class="btn btn-save">
+                                    <i class="fa-solid fa-floppy-disk"></i> Submit Training Record
                                 </button>
-
                             </div>
-
 
                         </div>
 
                     </div>
-
                 </div>
-
 
             </form>
 
         </section>
-
     </main>
 
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
+    <!-- FOOTER -->
     <footer class="footer">
-
-        <div>
-            Civil Aviation Authority of Bangladesh
-        </div>
-
-        <div>
-            Personnel Licensing Department
-        </div>
-
+        <div>Civil Aviation Authority of Bangladesh</div>
+        <div>Personnel Licensing Department</div>
     </footer>
-
 
 </div>
 
-
-<script
-        src="${pageContext.request.contextPath}/training-pel.js">
+<!-- JS Context Path Helper & Main Script -->
+<script>
+    window.contextPath = '${pageContext.request.contextPath}';
 </script>
-
+<script src="${pageContext.request.contextPath}/training-pel.js"></script>
 
 </body>
-
 </html>

@@ -41,7 +41,7 @@
 
     <!-- নিজের CAAB logo থাকলে এখানে path পরিবর্তন করবে -->
     <img
-            src="${pageContext.request.contextPath}/resources/images/caab-logo.jpg"
+            src="${pageContext.request.contextPath}/resources/images/caab-logo.png"
             class="caab-logo"
             alt="CAAB Logo">
 
@@ -53,7 +53,7 @@
         </h1>
 
         <h2>
-            HEADQUARTERS(0001)
+            FSR
         </h2>
 
     </div>
@@ -61,8 +61,8 @@
 
     <div class="header-right">
 
-        Logged on | Day Opened on: 11-Aug-2026 |
-        Server Date: 11-Aug-2026
+        Logged on | Day Opened on: <span id="dayOpenedDate"></span> |
+        Server Date: <span id="serverDate"></span>
 
         <br>
 
@@ -70,7 +70,6 @@
         Sunrise: | Sunset:
 
     </div>
-
 
 </header>
 
@@ -139,23 +138,6 @@
 <div class="main-area">
 
 
-    <!-- =================================================
-         LEFT SIDEBAR
-    ================================================== -->
-
-    <aside class="sidebar">
-
-
-
-        <a href="#"
-           class="sidebar-item active">
-
-            CAAB (Technical) E-Library
-
-        </a>
-
-
-    </aside>
 
 
     <!-- =================================================
@@ -173,20 +155,20 @@
 
                 <h1 class="page-title">
 
-                    CAAB (Technical) E-Library
+                    CAAB Technical e-Library
 
                 </h1>
 
 
                 <div class="page-description">
 
-                    Welcome to CAAB (Technical) E-Library.
+                    Welcome to CAAB Technical e-Library.
                     Access technical documents, manuals, circulars,
 
                     <br>
 
                     reports, and reference materials related to
-                    aviation and CAAB operations.
+                    aviation.
 
                 </div>
 
@@ -578,6 +560,7 @@
     System Managed by Simec System Limited.
 
 </footer>
+<script src="${pageContext.request.contextPath}/library.js"></script>
 
 
 </body>

@@ -40,7 +40,7 @@
 <div class="header">
 
     <img
-            src="${pageContext.request.contextPath}/resources/images/caab-logo.jpg"
+            src="${pageContext.request.contextPath}/resources/images/caab-logo.png"
             class="caab-logo"
             alt="CAAB Logo">
 
@@ -52,7 +52,7 @@
         </h1>
 
         <h2>
-            HEADQUARTERS(0001)
+           FSR
         </h2>
 
     </div>
@@ -60,8 +60,8 @@
 
     <div class="header-info">
 
-        Logged on | Day Opened on: 11-Aug-2026 |
-        Server Date: 11-Aug-2026
+        Logged on | Day Opened on: <span id="dayOpenedDate"></span> |
+        Server Date: <span id="serverDate"></span>
 
         <br>
 
@@ -84,7 +84,7 @@
 
         <i class="fa-solid fa-house"></i>
 
-        CAAB (Technical) E-Library
+        CAAB Technical e-Library
 
     </a>
 
@@ -142,7 +142,7 @@
         <a
                 href="${pageContext.request.contextPath}/library">
 
-            CAAB (Technical) E-Library
+            CAAB Technical e-Library
 
         </a>
 
@@ -402,7 +402,7 @@
                     id="selectedFile"
                     class="selected-file">
 
-                No PDF file selected.
+                Please select file.
 
             </div>
 

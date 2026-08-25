@@ -24,6 +24,10 @@ select {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 
 /* =====================================================
    HEADER
@@ -157,62 +161,76 @@ select {
    MAIN
 ===================================================== */
 
-.main-wrapper {
+.main-wrapper,
+.main-area {
     display: flex;
     min-height: calc(100vh - 166px);
+    padding: 0 30px; /* Container inner spacing */
+    gap: 30px; /* GAP BETWEEN SIDEBAR AND CONTENT */
 }
 
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
+/* =========================================================
+   SIDEBAR & CONDITIONAL ACTIVE HIGHLIGHT
+========================================================= */
 
 .sidebar {
     width: 260px;
-    flex-shrink: 0;
-    margin-left: 30px;
-    margin-top: 20px;
-    background: #f1f1f1;
-    min-height: 720px;
-    border: 1px solid #e0e0e0;
+    flex: 0 0 260px;
+    margin: 20px 0 20px 0; /* Align fix */
+    background: #ffffff;
+    border: 1px solid #d9e2e7;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    align-self: flex-start;
 }
 
-.sidebar-title {
-    background: #176fa3;
-    color: #ffffff;
-    padding: 14px 18px;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1.5;
-}
-
-.sidebar-title i {
-    margin-right: 7px;
-}
-
+/* Base Link Item Style */
 .sidebar-item {
+    min-height: 45px;
     display: flex;
     align-items: center;
     gap: 9px;
-    padding: 13px 18px;
-    color: #075485;
+    padding: 11px 16px;
+    color: #14577f;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e6e9;
+    border-left: 4px solid transparent;
+    font-size: 13px;
+    font-weight: 600;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    border-bottom: 1px solid #dddddd;
-    background: #eeeeee;
+    transition: all .2s ease;
 }
 
 .sidebar-item:hover {
-    background: #e3e3e3;
-    color: #075485;
+    color: #0b527d;
+    background: #eaf5fa;
+    text-decoration: none;
 }
 
-.sidebar-item.active {
-    background: #ffffff;
-    color: #075485;
-    border-left: 4px solid #176fa3;
-    padding-left: 14px;
+/* 1. প্রথম মেনু (CAAB Inspector Training Records) - ALWAYS SOLID BLUE HEADER */
+.sidebar-item:first-child {
+    background: #176fa3 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-left: none !important; /* Stripless Clean Solid Header */
+    padding-left: 16px !important;
+}
+
+.sidebar-item:first-child:hover {
+    background: #145f8c !important;
+    color: #ffffff !important;
+}
+
+/* 2. বাকি ৩টি মেনুর মধ্যে যেটি ACTIVE (খোলা) থাকবে - LIGHT BLUE */
+.sidebar-item:not(:first-child).active {
+    background: #eaf5fa !important;           /* Light Blue Background */
+    color: #176fa3 !important;                /* Blue Text */
+    border-left: 4px solid #176fa3 !important;     /* Left Active Border Line */
+    font-weight: 700;
+    padding-left: 12px;
+    box-shadow: inset 2px 0 5px rgba(23, 111, 163, 0.08);
 }
 
 
@@ -223,7 +241,7 @@ select {
 .content {
     flex: 1;
     min-width: 0;
-    padding: 17px 30px 50px 34px;
+    padding: 17px 0 50px 0;
 }
 
 .page-title {
@@ -300,8 +318,6 @@ select {
 
 /* =====================================================
    CARD HEADER ACTIONS
-   IMPORTANT:
-   JSP uses .card-header-actions
 ===================================================== */
 
 .card-header-actions {
@@ -373,7 +389,6 @@ select {
 
 /* =====================================================
    SEARCH CLEAR BUTTON
-   JSP uses .search-clear
 ===================================================== */
 
 .search-clear {
@@ -524,6 +539,7 @@ select {
 .training-type {
     color: #52636c;
     font-weight: 600;
+    text-transform: uppercase;
 }
 
 
@@ -879,7 +895,7 @@ select {
 
 
 /* =====================================================
-   APPROVE
+   APPROVE / CANCEL BUTTONS
 ===================================================== */
 
 .btn-approve {
@@ -891,11 +907,6 @@ select {
     background: #146c43;
     color: #ffffff;
 }
-
-
-/* =====================================================
-   CANCEL
-===================================================== */
 
 .btn-cancel {
     background: #6c757d;
@@ -909,19 +920,14 @@ select {
 
 
 /* =====================================================
-   RESPONSIVE - 1100
+   RESPONSIVE LAYOUTS
 ===================================================== */
 
 @media (max-width: 1100px) {
 
     .sidebar {
         width: 220px;
-        margin-left: 15px;
-    }
-
-    .content {
-        padding-left: 20px;
-        padding-right: 15px;
+        flex: 0 0 220px;
     }
 
     .header-right {
@@ -932,11 +938,6 @@ select {
         width: 210px;
     }
 }
-
-
-/* =====================================================
-   RESPONSIVE - 850
-===================================================== */
 
 @media (max-width: 850px) {
 
@@ -956,11 +957,6 @@ select {
         width: 240px;
     }
 }
-
-
-/* =====================================================
-   RESPONSIVE - 700
-===================================================== */
 
 @media (max-width: 700px) {
 
@@ -996,18 +992,21 @@ select {
         min-width: 100px;
     }
 
-    .main-wrapper {
+    .main-wrapper,
+    .main-area {
         display: block;
+        padding: 0 15px;
+        gap: 0;
     }
 
     .sidebar {
         width: auto;
-        margin: 15px;
+        margin: 15px 0;
         min-height: auto;
     }
 
     .content {
-        padding: 10px 15px 30px;
+        padding: 10px 0 30px;
     }
 
     .page-title {
@@ -1067,11 +1066,6 @@ select {
         min-width: 80px;
     }
 }
-
-
-/* =====================================================
-   RESPONSIVE - 450
-===================================================== */
 
 @media (max-width: 450px) {
 

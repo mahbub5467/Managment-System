@@ -1,593 +1,292 @@
+/* =========================================================
+   CAAB Technical E-Library - PEL Folder Management
+   Main JavaScript
+   ========================================================= */
 
-    // =========================================================
-    // SHOW SELECTED PDF
-    // =========================================================
+/* =========================================================
+   SHOW SELECTED PDF
+   ========================================================= */
 
-    function showSelectedFile() {
+function showSelectedFile() {
+    const input = document.getElementById("fileInput");
+    const selectedFile = document.getElementById("selectedFile");
 
-    const input =
-    document.getElementById("fileInput");
-
-    const selectedFile =
-    document.getElementById("selectedFile");
-
-
-    if (input.files.length === 0) {
-
-    selectedFile.innerHTML =
-    "No PDF file selected.";
-
-    return;
-}
-
-
-    const file =
-    input.files[0];
-
-
-    const fileName =
-    file.name.toLowerCase();
-
-
-    // CHECK EXTENSION
-
-    if (!fileName.endsWith(".pdf")) {
-
-    alert("Only PDF files are allowed.");
-
-    input.value = "";
-
-    selectedFile.innerHTML =
-    "No PDF file selected.";
-
-    return;
-}
-
-
-    // CHECK MIME TYPE
-
-    if (
-    file.type &&
-    file.type !== "application/pdf"
-    ) {
-
-    alert("Only PDF files are allowed.");
-
-    input.value = "";
-
-    selectedFile.innerHTML =
-    "No PDF file selected.";
-
-    return;
-}
-
-
-    selectedFile.innerHTML =
-    '<i class="fa-solid fa-file-pdf"></i> ' +
-    'Selected: <strong>' +
-    escapeHtml(file.name) +
-    '</strong>';
-
-}
-
-
-    // =========================================================
-    // VALIDATE PDF BEFORE SUBMIT
-    // =========================================================
-
-    function validatePdfUpload() {
-
-    const input =
-    document.getElementById("fileInput");
-
+    if (!input || !selectedFile) return;
 
     if (input.files.length === 0) {
+        selectedFile.innerHTML = "No PDF file selected.";
+        return;
+    }
 
-    alert("Please select a PDF file.");
+    const file = input.files[0];
+    const fileName = file.name.toLowerCase();
 
-    return false;
+    // Check Extension
+    if (!fileName.endsWith(".pdf")) {
+        alert("Only PDF files (.pdf) are allowed.");
+        input.value = "";
+        selectedFile.innerHTML = "No PDF file selected.";
+        return;
+    }
+
+    // Check MIME Type (allow application/pdf or application/x-pdf)
+    if (file.type && !file.type.includes("pdf")) {
+        alert("Only PDF files are allowed.");
+        input.value = "";
+        selectedFile.innerHTML = "No PDF file selected.";
+        return;
+    }
+
+    selectedFile.innerHTML =
+        '<i class="fa-solid fa-file-pdf"></i> Selected: <strong>' +
+        escapeHtml(file.name) +
+        "</strong>";
 }
 
+/* =========================================================
+   VALIDATE PDF BEFORE SUBMIT
+   ========================================================= */
 
-    const file =
-    input.files[0];
+function validatePdfUpload() {
+    const input = document.getElementById("fileInput");
 
+    if (!input || input.files.length === 0) {
+        alert("Please select a PDF file to upload.");
+        return false;
+    }
 
-    const fileName =
-    file.name.toLowerCase();
-
-
-    // CHECK EXTENSION
+    const file = input.files[0];
+    const fileName = file.name.toLowerCase();
 
     if (!fileName.endsWith(".pdf")) {
+        alert("Only PDF files (.pdf) are allowed.");
+        input.value = "";
+        return false;
+    }
 
-    alert("Only PDF files are allowed.");
-
-    input.value = "";
-
-    return false;
-}
-
-
-    // CHECK MIME TYPE
-
-    if (
-    file.type &&
-    file.type !== "application/pdf"
-    ) {
-
-    alert("Only PDF files are allowed.");
-
-    input.value = "";
-
-    return false;
-}
-
+    if (file.type && !file.type.includes("pdf")) {
+        alert("Only PDF files are allowed.");
+        input.value = "";
+        return false;
+    }
 
     return true;
-
 }
 
+/* =========================================================
+   DELETE MODAL
+   ========================================================= */
 
-    // =========================================================
-    // DELETE MODAL
-    // =========================================================
+let deleteForm = null;
 
-    let deleteForm = null;
+function openDeleteModal(button) {
+    if (!button) return;
 
+    deleteForm = button.closest(".delete-form");
 
-    // =========================================================
-    // OPEN DELETE MODAL
-    // =========================================================
+    const fileName = button.getAttribute("data-file-name");
+    const fileNameElement = document.getElementById("deleteFileName");
 
-    function openDeleteModal(button) {
+    if (fileNameElement) {
+        fileNameElement.textContent = fileName || "Unknown file";
+    }
 
-    deleteForm =
-        button.closest(".delete-form");
-
-
-    const fileName =
-    button.getAttribute("data-file-name");
-
-
-    const fileNameElement =
-    document.getElementById(
-    "deleteFileName"
-    );
-
-
-    fileNameElement.textContent =
-    fileName || "Unknown file";
-
-
-    const modal =
-    document.getElementById(
-    "deleteModal"
-    );
-
+    const modal = document.getElementById("deleteModal");
+    if (!modal) return;
 
     modal.classList.add("show");
-
-
-    // STOP BACKGROUND SCROLLING
-
-    document.body.style.overflow =
-    "hidden";
-
+    document.body.style.overflow = "hidden";
 }
 
+function closeDeleteModal() {
+    const modal = document.getElementById("deleteModal");
+    if (modal) {
+        modal.classList.remove("show");
+    }
 
-    // =========================================================
-    // CLOSE DELETE MODAL
-    // =========================================================
-
-    function closeDeleteModal() {
-
-    const modal =
-    document.getElementById(
-    "deleteModal"
-    );
-
-
-    modal.classList.remove("show");
-
-
-    // ENABLE SCROLLING
-
-    document.body.style.overflow =
-    "";
-
-
+    document.body.style.overflow = "";
     deleteForm = null;
-
 }
 
-
-    // =========================================================
-    // CONFIRM DELETE
-    // =========================================================
-
-    function confirmDelete() {
-
-    if (!deleteForm) {
-
-    return;
-
-}
-
-
-    // SUBMIT ORIGINAL DELETE FORM
-
+function confirmDelete() {
+    if (!deleteForm) return;
     deleteForm.submit();
-
 }
 
+/* =========================================================
+   GLOBAL MODAL EVENT LISTENERS
+   ========================================================= */
 
-    // =========================================================
-    // CLOSE WHEN CLICKING OUTSIDE
-    // =========================================================
+// Close when clicking outside overlay
+document.addEventListener("click", function (event) {
+    const modal = document.getElementById("deleteModal");
+    const overlay = document.querySelector(".delete-modal-overlay");
 
-    document.addEventListener(
-    "click",
-    function (event) {
+    if (modal && overlay && modal.classList.contains("show") && event.target === overlay) {
+        closeDeleteModal();
+    }
+});
 
-    const modal =
-    document.getElementById(
-    "deleteModal"
-    );
+// ESC Key Close
+document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
 
+    const modal = document.getElementById("deleteModal");
+    if (modal && modal.classList.contains("show")) {
+        closeDeleteModal();
+    }
+});
 
-    const overlay =
-    document.querySelector(
-    ".delete-modal-overlay"
-    );
+/* =========================================================
+   HTML ESCAPE UTILITY
+   ========================================================= */
 
-
-    if (
-    modal.classList.contains("show") &&
-    event.target === overlay
-    ) {
-
-    closeDeleteModal();
-
-}
-
-}
-    );
-
-
-    // =========================================================
-    // ESC KEY CLOSE
-    // =========================================================
-
-    document.addEventListener(
-    "keydown",
-    function (event) {
-
-    if (event.key !== "Escape") {
-
-    return;
-
-}
-
-
-    const modal =
-    document.getElementById(
-    "deleteModal"
-    );
-
-
-    if (
-    modal.classList.contains("show")
-    ) {
-
-    closeDeleteModal();
-
-}
-
-}
-    );
-
-
-    // =========================================================
-    // HTML ESCAPE
-    // =========================================================
-
-    function escapeHtml(value) {
-
+function escapeHtml(value) {
+    if (!value) return "";
     return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
+/* =========================================================
+   AUTO HIDE ALERT
+   ========================================================= */
 
-    // =========================================================
-    // AUTO HIDE ALERT
-    // =========================================================
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+        document.querySelectorAll(".alert").forEach(function (alert) {
+            alert.style.transition = "opacity .4s ease";
+            alert.style.opacity = "0";
 
-    setTimeout(
-    function () {
+            setTimeout(function () {
+                alert.remove();
+            }, 400);
+        });
+    }, 5000);
 
-    document
-        .querySelectorAll(".alert")
-        .forEach(
-            function (alert) {
+    /* Dynamic Date Population for Header */
+    const todayStr = new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    }).replace(/ /g, "-");
 
-                alert.style.transition =
-                    "opacity .4s ease";
+    const dayOpened = document.getElementById("dayOpenedDate");
+    const serverDate = document.getElementById("serverDate");
 
-                alert.style.opacity =
-                    "0";
+    if (dayOpened) dayOpened.textContent = todayStr;
+    if (serverDate) serverDate.textContent = todayStr;
+});
 
+/* =========================================================
+   BOOK / PDF SEARCH
+   ========================================================= */
 
-                setTimeout(
-                    function () {
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("bookSearchInput");
+    const clearButton = document.getElementById("clearBookSearch");
+    const resultInfo = document.getElementById("searchResultInfo");
+    const fileList = document.querySelector(".file-list");
 
-                        alert.remove();
+    if (!searchInput) return;
 
-                    },
-                    400
-                );
+    const fileRows = fileList ? Array.from(fileList.querySelectorAll(".file-row")) : [];
+    const totalFiles = fileRows.length;
 
-            }
-        );
+    function searchBooks() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
 
-},
-    5000
-    );
-    /* =========================================================
-       BOOK / PDF SEARCH
-    ========================================================= */
-
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const searchInput =
-            document.getElementById("bookSearchInput");
-
-        const clearButton =
-            document.getElementById("clearBookSearch");
-
-        const resultInfo =
-            document.getElementById("searchResultInfo");
-
-        const fileList =
-            document.querySelector(".file-list");
-
-
-        if (!searchInput || !fileList) {
+        if (totalFiles === 0) {
+            if (resultInfo) resultInfo.textContent = "No PDF files available in this folder.";
             return;
         }
 
+        fileRows.forEach(function (row) {
+            const fileNameElement = row.querySelector(".file-name");
+            const fileTypeElement = row.querySelector(".file-type");
 
-        const fileRows =
-            Array.from(fileList.querySelectorAll(".file-row"));
+            const fileName = fileNameElement ? fileNameElement.textContent.toLowerCase() : "";
+            const fileType = fileTypeElement ? fileTypeElement.textContent.toLowerCase() : "";
 
+            const matched = fileName.includes(searchText) || fileType.includes(searchText);
 
-        const totalFiles =
-            fileRows.length;
+            if (matched) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
 
-
-        function searchBooks() {
-
-            const searchText =
-                searchInput.value
-                    .trim()
-                    .toLowerCase();
-
-
-            let visibleCount = 0;
-
-
-            fileRows.forEach(function (row) {
-
-                const fileNameElement =
-                    row.querySelector(".file-name");
-
-
-                const fileTypeElement =
-                    row.querySelector(".file-type");
-
-
-                const fileName =
-                    fileNameElement
-                        ? fileNameElement.textContent.toLowerCase()
-                        : "";
-
-
-                const fileType =
-                    fileTypeElement
-                        ? fileTypeElement.textContent.toLowerCase()
-                        : "";
-
-
-                const matched =
-                    fileName.includes(searchText) ||
-                    fileType.includes(searchText);
-
-
-                if (matched) {
-
-                    row.style.display = "";
-
-                    visibleCount++;
-
-                } else {
-
-                    row.style.display = "none";
-
-                }
-
-            });
-
-
-            /* Clear button */
-
+        /* Clear button toggle */
+        if (clearButton) {
             if (searchText.length > 0) {
-
                 clearButton.classList.add("show");
-
             } else {
-
                 clearButton.classList.remove("show");
-
             }
-
-
-            /* Result message */
-
-            if (searchText.length === 0) {
-
-                resultInfo.textContent =
-                    "Showing all " +
-                    totalFiles +
-                    " PDF file(s).";
-
-                removeNoResultMessage();
-
-                return;
-            }
-
-
-            if (visibleCount === 0) {
-
-                resultInfo.textContent =
-                    "No PDF found for \"" +
-                    searchInput.value +
-                    "\".";
-
-                showNoResultMessage();
-
-            } else {
-
-                resultInfo.textContent =
-                    "Found " +
-                    visibleCount +
-                    " PDF file(s).";
-
-                removeNoResultMessage();
-
-            }
-
         }
 
+        /* Result message update */
+        if (!resultInfo) return;
 
-        /* =====================================================
-           SHOW NO RESULT
-        ===================================================== */
+        if (searchText.length === 0) {
+            resultInfo.textContent = "Showing all " + totalFiles + " PDF file(s).";
+            removeNoResultMessage();
+            return;
+        }
 
-        function showNoResultMessage() {
+        if (visibleCount === 0) {
+            resultInfo.textContent = 'No PDF found for "' + searchInput.value + '".';
+            showNoResultMessage();
+        } else {
+            resultInfo.textContent = "Found " + visibleCount + " PDF file(s).";
+            removeNoResultMessage();
+        }
+    }
 
-            let message =
-                document.getElementById("noSearchResult");
+    function showNoResultMessage() {
+        if (!fileList) return;
+        let message = document.getElementById("noSearchResult");
 
+        if (message) return;
 
-            if (message) {
-                return;
-            }
-
-
-            message =
-                document.createElement("div");
-
-
-            message.id =
-                "noSearchResult";
-
-
-            message.className =
-                "no-search-result";
-
-
-            message.innerHTML = `
-
+        message = document.createElement("div");
+        message.id = "noSearchResult";
+        message.className = "no-search-result";
+        message.innerHTML = `
             <i class="fa-solid fa-magnifying-glass"></i>
-
-            <div class="no-search-result-title">
-                No Matching PDF Found
-            </div>
-
-            <div class="no-search-result-text">
-                Try searching with a different book or PDF name.
-            </div>
-
+            <div class="no-search-result-title">No Matching PDF Found</div>
+            <div class="no-search-result-text">Try searching with a different book or PDF name.</div>
         `;
 
+        fileList.appendChild(message);
+    }
 
-            fileList.appendChild(message);
+    function removeNoResultMessage() {
+        const message = document.getElementById("noSearchResult");
+        if (message) message.remove();
+    }
 
+    /* Event Listeners for Search */
+    searchInput.addEventListener("input", searchBooks);
+
+    if (clearButton) {
+        clearButton.addEventListener("click", function () {
+            searchInput.value = "";
+            searchBooks();
+            searchInput.focus();
+        });
+    }
+
+    searchInput.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            searchInput.value = "";
+            searchBooks();
         }
-
-
-        /* =====================================================
-           REMOVE NO RESULT
-        ===================================================== */
-
-        function removeNoResultMessage() {
-
-            const message =
-                document.getElementById("noSearchResult");
-
-
-            if (message) {
-
-                message.remove();
-
-            }
-
-        }
-
-
-        /* =====================================================
-           SEARCH INPUT
-        ===================================================== */
-
-        searchInput.addEventListener(
-            "input",
-            searchBooks
-        );
-
-
-        /* =====================================================
-           CLEAR SEARCH
-        ===================================================== */
-
-        clearButton.addEventListener(
-            "click",
-            function () {
-
-                searchInput.value = "";
-
-                searchBooks();
-
-                searchInput.focus();
-
-            }
-        );
-
-
-        /* =====================================================
-           ESC KEY
-        ===================================================== */
-
-        searchInput.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (event.key === "Escape") {
-
-                    searchInput.value = "";
-
-                    searchBooks();
-
-                }
-
-            }
-        );
-
     });
-
-
+});
