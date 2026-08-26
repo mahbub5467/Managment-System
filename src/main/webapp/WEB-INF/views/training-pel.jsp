@@ -299,8 +299,8 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <div>Civil Aviation Authority of Bangladesh</div>
-        <div>Personnel Licensing Department</div>
+        CAAB ICT &amp; e-Governance Project Portal, version:0.2.1.1, Copyright &copy; Civil Aviation Authority Bangladesh, 2026 All rights reserved.<br>
+        System Managed by Simec System Limited.
     </footer>
 
 </div>

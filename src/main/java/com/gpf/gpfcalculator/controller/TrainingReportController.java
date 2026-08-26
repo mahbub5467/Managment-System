@@ -5,12 +5,14 @@ import com.gpf.gpfcalculator.model.SupervisorAssessment;
 import com.gpf.gpfcalculator.repository.PelTrainingRecordRepository;
 import com.gpf.gpfcalculator.repository.SupervisorAssessmentRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,46 +33,56 @@ public class TrainingReportController {
     }
 
     // =========================================================
-    // ১. REPORT MAIN PAGE VIEW & STRICT MULTI-PARAM SEARCH
+    // ১. REPORT MAIN PAGE VIEW (Search Action Triggered Only)
     // =========================================================
     @GetMapping("/training/training-records-report")
     public String showReport(
             @RequestParam(required = false) String employeeId,
             @RequestParam(required = false) String department,
+            HttpServletRequest request,
             Model model) {
 
-        List<PelTrainingRecord> records = trainingRecordRepository.findAll();
+        List<PelTrainingRecord> records = new ArrayList<>();
 
-        // ১. Employee ID (EIIN) দিয়ে ফিল্টার
-        if (employeeId != null && !employeeId.trim().isEmpty()) {
-            String empQuery = employeeId.trim().toLowerCase();
-            records = records.stream()
-                    .filter(r -> r.getEmployeeId() != null && r.getEmployeeId().trim().toLowerCase().contains(empQuery))
-                    .collect(Collectors.toList());
-        }
+        // 🎯 সার্চ বাটন প্রেস করা হয়েছে কিনা চেক (Query Params চেক করে)
+        boolean isSearchSubmitted = request.getParameterMap().containsKey("employeeId") ||
+                request.getParameterMap().containsKey("department");
 
-        // ২. Division / Department ফিল্টার (Strict Matching Solution)
-        if (department != null && !department.trim().isEmpty()) {
-            String deptQuery = department.trim().toLowerCase();
-            String fullDeptName = getDepartmentFullName(deptQuery);
+        // ইউজার সার্চ বাটনে ক্লিক করলেই কেবল ডাটা লোড হবে
+        if (isSearchSubmitted) {
+            records = trainingRecordRepository.findAll();
 
-            records = records.stream()
-                    .filter(r -> {
-                        String depName = (r.getDepName() != null && !r.getDepName().trim().isEmpty())
-                                ? r.getDepName().trim().toLowerCase()
-                                : "pel";
+            // ১. Employee ID (EIIN) দিয়ে ফিল্টার (ইনপুট থাকলে)
+            if (employeeId != null && !employeeId.trim().isEmpty()) {
+                String empQuery = employeeId.trim().toLowerCase();
+                records = records.stream()
+                        .filter(r -> r.getEmployeeId() != null && r.getEmployeeId().trim().toLowerCase().contains(empQuery))
+                        .collect(Collectors.toList());
+            }
 
-                        return depName.equals(deptQuery) ||
-                                (!fullDeptName.isEmpty() && depName.equals(fullDeptName)) ||
-                                depName.contains(deptQuery);
-                    })
-                    .collect(Collectors.toList());
+            // ২. Division / Department ফিল্টার (ড্রপডাউন সিলেক্ট থাকলে)
+            if (department != null && !department.trim().isEmpty()) {
+                String deptQuery = department.trim().toLowerCase();
+                String fullDeptName = getDepartmentFullName(deptQuery);
+
+                records = records.stream()
+                        .filter(r -> {
+                            String depName = (r.getDepName() != null && !r.getDepName().trim().isEmpty())
+                                    ? r.getDepName().trim().toLowerCase()
+                                    : "pel";
+
+                            return depName.equals(deptQuery) ||
+                                    (!fullDeptName.isEmpty() && depName.equals(fullDeptName)) ||
+                                    depName.contains(deptQuery);
+                        })
+                        .collect(Collectors.toList());
+            }
         }
 
         long approvedCount = 0;
         long pendingCount = 0;
 
-        if (records != null) {
+        if (records != null && !records.isEmpty()) {
             for (PelTrainingRecord record : records) {
                 SupervisorAssessment assessment = assessmentRepository
                         .findByTrainingRecordId(record.getId())
@@ -119,6 +131,7 @@ public class TrainingReportController {
         model.addAttribute("inspectorList", inspectorMap.values());
         model.addAttribute("searchEmployeeId", employeeId);
         model.addAttribute("searchDepartment", department);
+        model.addAttribute("isSearchSubmitted", isSearchSubmitted);
         model.addAttribute("totalRecords", records != null ? records.size() : 0);
         model.addAttribute("approvedCount", approvedCount);
         model.addAttribute("pendingCount", pendingCount);
@@ -158,7 +171,7 @@ public class TrainingReportController {
     }
 
     // =========================================================
-    // 🎯 ৩. ALL INSPECTORS PDF REPORT VIEW (ALL DATA TOGETHER)
+    // ৩. ALL INSPECTORS PDF REPORT VIEW (ALL DATA TOGETHER)
     // URL Path: /training/training-records-report/pdf/all
     // =========================================================
     @GetMapping("/training/training-records-report/pdf/all")
@@ -168,7 +181,7 @@ public class TrainingReportController {
 
         List<PelTrainingRecord> records = trainingRecordRepository.findAll();
 
-        // যদি সার্চে নির্দিষ্ট Division বাছাই করা থাকে, তবে সেই Division-এর সবার ডাটা আসবে
+        // যদি নির্দিষ্ট Division ফিল্টার সিলেক্ট থাকে
         if (department != null && !department.trim().isEmpty()) {
             String deptQuery = department.trim().toLowerCase();
             String fullDeptName = getDepartmentFullName(deptQuery);
@@ -184,7 +197,6 @@ public class TrainingReportController {
                     .collect(Collectors.toList());
         }
 
-        // Supervisor Assessment ডাটা যুক্তকরণ
         if (records != null) {
             for (PelTrainingRecord record : records) {
                 SupervisorAssessment assessment = assessmentRepository
@@ -201,7 +213,7 @@ public class TrainingReportController {
         }
 
         model.addAttribute("records", records);
-        model.addAttribute("isAllRecords", true); // JSP-তে All Record ফ্ল্যাগ সেট করা হলো
+        model.addAttribute("isAllRecords", true);
 
         return "training-report-pdf";
     }

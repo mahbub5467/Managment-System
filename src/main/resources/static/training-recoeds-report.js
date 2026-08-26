@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ====================================================== */
     if (reportForm) {
         reportForm.addEventListener("submit", function (e) {
-            // EIIN Inp Trimming
+            // Trim Employee ID spaces before submit
             if (employeeIdInput) {
                 employeeIdInput.value = employeeIdInput.value.trim();
             }
 
-            // Search UI State Activation
+            // Search Button UI Spinner Activation
             if (searchBtn) {
                 searchBtn.disabled = true;
                 searchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Searching...';
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const pdfButtons = document.querySelectorAll('a[href*="/pdf/"]');
     pdfButtons.forEach(btn => {
         btn.addEventListener("click", function () {
-            // Opens PDF in new tab while retaining original button UI
+            // Opens PDF in new tab while displaying brief spinner UI
             const originalText = this.innerHTML;
             this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Opening...';
             setTimeout(() => {

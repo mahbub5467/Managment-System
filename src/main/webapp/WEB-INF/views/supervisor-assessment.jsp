@@ -216,7 +216,7 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${not empty record.certificateFileName}">
-                                                <a href="${pageContext.request.contextPath}/supervisor-assessment/certificate/${record.id}"
+                                                <a href="${pageContext.request.contextPath}/training/supervisor-assessment/certificate/${record.id}"
                                                    target="_blank"
                                                    class="btn btn-certificate">
                                                     <i class="fa-solid fa-file-pdf"></i> View
@@ -286,7 +286,10 @@
         </div>
 
         <!-- FORM -->
-        <form id="assessmentForm" method="post">
+        <form id="assessmentForm" action="${pageContext.request.contextPath}/training/supervisor-assessment/save" method="post">
+            <!-- 🎯 dynamically target ID pass করার জন্য Hidden Input -->
+            <input type="hidden" id="modalRecordId" name="id" value="" />
+
             <div class="modal-body">
 
                 <div class="modal-info">
@@ -312,7 +315,7 @@
                         <option value="Unsatisfactory">Unsatisfactory</option>
                         <option value="Needs Review">Needs Review</option>
                         <option value="Approved">Approved</option>
-                        <option value="Rejected">Rejected</option>
+
                     </select>
                 </div>
 

@@ -29,7 +29,7 @@ function openAssessmentModal(id, employeeId, employeeName) {
 
     /* Set Modal Form Action URL */
     if (form) {
-        form.action = getContextPath() + "/supervisor-assessment/save/" + encodeURIComponent(id);
+        form.action = getContextPath() + "/training/supervisor-assessment/save/" + encodeURIComponent(id);
     }
 
     /* Set Employee Info */

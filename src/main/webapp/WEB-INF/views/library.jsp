@@ -187,7 +187,7 @@
 
                 <i class="fa-solid fa-building"></i>
 
-                Departments
+                CAAB Documents
 
             </div>
 
@@ -480,6 +480,51 @@
                     <i class="fa-solid fa-chevron-right folder-arrow"></i>
 
                 </a>
+
+
+            </div>
+
+        </div>
+        <div class="panel department-panel">
+
+            <div class="section-title">
+
+                <i class="fa-solid fa-building"></i>
+
+                IQ Documents
+
+            </div>
+
+            <!-- AIG -->
+
+            <a href="${pageContext.request.contextPath}/library/aig"
+               class="department-folder">
+
+                <div class="folder-icon">
+
+                    <i class="fa-solid fa-folder"></i>
+
+                </div>
+
+                <div>
+
+                    <div class="department-name">
+
+                        AIG
+
+                    </div>
+
+                    <div class="department-description">
+
+                        Accident Investigation
+
+                    </div>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-right folder-arrow"></i>
+
+            </a>
 
 
             </div>
